@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "module": "commonjs",
+        "resolveJsonModule": true,
+        "outDir": "./build-server",
+        "noEmit": false,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true ,
+        "skipLibCheck": true
+    },
+    "lib": ["es2021"],
+    "extends": "./tsconfig.json",
+    "include": ["./server/**/*.ts", "./shared/**/*.ts"],
+    "references": [
+        {
+            "path": "./shared",
+            "prepend": true
+        }
+    ]
+}

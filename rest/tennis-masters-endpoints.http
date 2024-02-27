@@ -1,0 +1,42 @@
+GET http://localhost:{{PORT}}/api/v1/users HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+###
+
+
+GET http://localhost:{{PORT}}/api/v1/users/1 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+###
+
+
+POST http://localhost:{{PORT}}/api/v1/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "nowy_uzytkownik",
+  "email": "nowy_uzytkownik@example.com"
+}
+###
+
+POST http://localhost:{{PORT}}/api/v1/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "nowy_uzytkownik@example.com",
+  "password": "xxx",
+  "password2": "xxx"
+}
+###
+
+PUT http://localhost:{{PORT}}/api/v1/users/{{USER_ID}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "zmieniony_uzytkownik",
+  "email": "zmieniony_uzytkownik@example.com"
+}
+###
+
+DELETE http://localhost:{{PORT}}/api/v1/users/{{USER_ID}} HTTP/1.1
+###
