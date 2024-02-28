@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { ContainerProps, Props } from '../../models';
-import { CustomContainer } from './Container.style';
+import {ContainerProps, Props} from '../../models';
+import {CustomContainer} from './Container.style';
 
 const Container: React.FC<Props & ContainerProps>= (props: Props & ContainerProps) => {
-    return <CustomContainer $flex = {!!props.flex}>
+    return <CustomContainer
+        $flex = {props.flex}
+        $flexDirection = {props.flexDirection}
+    >
         { props.children }
     </CustomContainer>
 }
