@@ -24,4 +24,5 @@ export interface ButtonProps {
 
 export type ContainerProps = {
     flex?: boolean;
+    flexDirection?: 'row' | 'column';
 }

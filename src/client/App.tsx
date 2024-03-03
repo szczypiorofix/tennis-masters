@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import Home from "./views/home/Home";
 import Admin from "./views/admin/Admin";
@@ -11,12 +8,11 @@ import Register from "./views/register/Register";
 import ErrorPage from "./views/error/ErrorPage";
 
 export const App: React.FC = () => {
-
     const router = createBrowserRouter([
         {
             path: "/",
             element: <Home />,
-            errorElement: <ErrorPage />,
+            errorElement: <ErrorPage />
         },
         {
             path: "/dashboard",
@@ -31,7 +27,6 @@ export const App: React.FC = () => {
             element: <Register />,
         },
     ]);
-
     return (
         <React.StrictMode>
             <RouterProvider router={router} />

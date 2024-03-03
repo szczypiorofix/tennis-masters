@@ -23,8 +23,13 @@ const Home: React.FC = () => {
                 <Navbar title={viewNameResolve(app.view)}></Navbar>
             </Header>
             <Main>
-                <Container>
+                <Container
+                    flex={true}
+                    flexDirection={"column"}
+                >
                     <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/login">Logowanie</Link>
+                    <Link to="/register">Rejestracja</Link>
                 </Container>
             </Main>
             <Footer>
