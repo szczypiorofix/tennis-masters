@@ -14,6 +14,7 @@ import {
 
 import rootRouter from './routes/root.controller';
 import MongoDBService from './services/mongodb.service';
+import LoggerService from "./services/logger.service";
 
 dotenv.config({ path: __dirname+'/.env' });
 
@@ -38,12 +39,13 @@ app.use(invalidPathHandler)
 
 
 app.listen(PORT, (): void => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    LoggerService.info(`Server running at http://localhost:${PORT}`);
     const mongoService: MongoDBService = new MongoDBService();
-    mongoService.connect().then(()=> {
-        console.log('MongoDB connected');
-    })
-    .catch(err => {
-        console.error('MongoDB connection error', err);
-    });
+    mongoService.connect()
+        .then(() => {
+            LoggerService.info('MongoDB connected');
+        })
+        .catch(err => {
+            LoggerService.info('MongoDB connection error: ' + err.toString());
+        });
 });
