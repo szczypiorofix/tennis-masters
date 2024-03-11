@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es2020",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "module": "commonjs",
         "resolveJsonModule": true,
-        "outDir": "./build-server",
+        "outDir": "./build/server",
         "noEmit": false,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -14,11 +14,11 @@
     },
     "lib": ["es2021"],
     "extends": "./tsconfig.json",
-    "include": ["./server/**/*.ts", "./shared/**/*.ts"],
+    "include": ["./src/server/**/*.ts", "./src/shared/**/*.ts"],
     "exclude": ["node_modules"],
     "references": [
         {
-            "path": "./shared",
+            "path": "./src/shared",
             "prepend": true
         }
     ]
