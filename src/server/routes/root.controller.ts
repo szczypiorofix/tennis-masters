@@ -1,6 +1,6 @@
 import express, {Router} from 'express';
-import usersRouter from './users/users.controller';
-import statusRouter from './status/status.controller';
+import usersRouter from "./users/users.route";
+import statusRouter from "./status/status.route";
 
 const apiRouter: Router = express.Router();
 apiRouter.use("/users", usersRouter);

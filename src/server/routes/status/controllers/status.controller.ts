@@ -1,20 +1,9 @@
-import express, { Request, Response, Router } from 'express';
-import { MongoDBResponse, ServerResponse } from '../../../shared';
+import {Request, Response} from 'express';
+import {MongoDBResponse, ServerResponse} from '../../../../shared';
 import mongoose from 'mongoose';
-import MongoClient from '../../core/MongoClient';
+import MongoClient from '../../../core/MongoClient';
 
-const statusRouter: Router = express.Router();
-
-statusRouter.get("/server", (request: Request, response: Response) => {
-    const resp: ServerResponse = {
-        error: false,
-        code: 200,
-        message: "OK"
-    };
-    response.status(resp.code).json(resp);
-});
-
-statusRouter.get("/mongodb", async (request: Request, response: Response) => {
+export const mongoDbStatus = async (request: Request, response: Response) => {
     let resp: ServerResponse & MongoDBResponse = {
         error: false,
         code: 200,
@@ -35,6 +24,13 @@ statusRouter.get("/mongodb", async (request: Request, response: Response) => {
         }
     }
     response.status(resp.code).json(resp);
-});
+}
 
-export default statusRouter;
+export const serverStatus = (request: Request, response: Response) => {
+    const resp: ServerResponse = {
+        error: false,
+        code: 200,
+        message: "OK"
+    };
+    response.status(resp.code).json(resp);
+}
