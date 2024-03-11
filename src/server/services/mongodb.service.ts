@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import {Connection} from "mongoose";
 import MongoClient from '../core/MongoClient';
 
 class MongoDBService {
@@ -8,12 +8,18 @@ class MongoDBService {
     this.client = MongoClient.getInstance();
   }
 
-  public async connect(): Promise<mongoose.Connection> {
-    return this.client.connect();
+  public async connect(): Promise<Connection> {
+    return new Promise<Connection>((resolve, reject) => {
+      try {
+        resolve(this.client.connect());
+      } catch(err) {
+        reject(err);
+      }
+    });
   }
 
   public async close(): Promise<void> {
-    return this.client.close();
+    return await this.client.close();
   }
 }
 
