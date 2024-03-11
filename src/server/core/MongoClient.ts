@@ -1,7 +1,6 @@
 import mongoose, { Connection, ConnectOptions, mongo } from 'mongoose';
 
 class MongoClient {
-
     private connection: Connection;
 
     private static instance: MongoClient = null;
@@ -18,10 +17,11 @@ class MongoClient {
     public async connect(): Promise<mongoose.Connection> {
         const { MONGO_DB_STRING } = process.env;
         return new Promise((resolve, reject): void => {
-            mongoose.connect(MONGO_DB_STRING, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            } as ConnectOptions)
+            mongoose
+                .connect(MONGO_DB_STRING, {
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                } as ConnectOptions)
                 .then((): void => {
                     this.connection = mongoose.connection;
                     resolve(mongoose.connection);
@@ -36,16 +36,16 @@ class MongoClient {
         });
     }
 
-    public async close () {
+    public async close() {
         if (!this.connection) {
-            throw new Error("MongoClient: connection object is nul!");
+            throw new Error('MongoClient: connection object is nul!');
         }
         await this.connection.close();
     }
 
     public db(): mongo.Db {
         if (!this.connection) {
-            throw new Error("MongoClient: connection object is nul!");
+            throw new Error('MongoClient: connection object is nul!');
         }
         return this.connection.db;
     }

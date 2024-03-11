@@ -8,7 +8,4 @@ const NavbarTitle = styled.h1`
     color: darkblue;
 `;
 
-export {
-    NavbarStyled,
-    NavbarTitle
-};
+export { NavbarStyled, NavbarTitle };

@@ -7,11 +7,13 @@ interface NavbarProps {
     title?: string;
 }
 
-const Navbar: React.FC<Props & NavbarProps>= (props: Props & NavbarProps) => {
-    return <NavbarStyled>
-        {props.title && <NavbarTitle>{props.title}</NavbarTitle>}
-        {props.children}
-    </NavbarStyled>
-}
+const Navbar: React.FC<Props & NavbarProps> = (props: Props & NavbarProps) => {
+    return (
+        <NavbarStyled>
+            {props.title && <NavbarTitle>{props.title}</NavbarTitle>}
+            {props.children}
+        </NavbarStyled>
+    );
+};
 
 export default Navbar;

@@ -20,7 +20,7 @@ const InputComponents = styled.input`
     padding: 4px;
     border-radius: 4px;
     border: 2px solid #33333399;
-    transition: 0.2s cubic-bezier(0.5, 0, 0.50, 0.95);
+    transition: 0.2s cubic-bezier(0.5, 0, 0.5, 0.95);
     &:focus {
         outline: none;
         border: 2px solid #000000;
@@ -33,10 +33,10 @@ const SubmitButtonComponent = styled.button`
     font-weight: 700;
     border: none;
     background-color: #333333;
-    color: #FFFFFF;
+    color: #ffffff;
     cursor: pointer;
     margin: 10px 0;
-    transition: 0.2s cubic-bezier(0.5, 0, 0.50, 0.95);
+    transition: 0.2s cubic-bezier(0.5, 0, 0.5, 0.95);
     &:hover {
         background-color: #000000;
     }
@@ -54,5 +54,5 @@ export {
     LabelComponent,
     InputComponents,
     InputGroupComponent,
-    SubmitButtonComponent
+    SubmitButtonComponent,
 };

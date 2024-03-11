@@ -1,29 +1,29 @@
 import React from 'react';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Home from "./views/home/Home";
-import Admin from "./views/admin/Admin";
-import Login from "./views/login/Login";
-import Register from "./views/register/Register";
-import ErrorPage from "./views/error/ErrorPage";
+import Home from './views/home/Home';
+import Admin from './views/admin/Admin';
+import Login from './views/login/Login';
+import Register from './views/register/Register';
+import ErrorPage from './views/error/ErrorPage';
 
 export const App: React.FC = () => {
     const router = createBrowserRouter([
         {
-            path: "/",
+            path: '/',
             element: <Home />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
         },
         {
-            path: "/dashboard",
+            path: '/dashboard',
             element: <Admin />,
         },
         {
-            path: "/login",
+            path: '/login',
             element: <Login />,
         },
         {
-            path: "/register",
+            path: '/register',
             element: <Register />,
         },
     ]);
@@ -32,6 +32,6 @@ export const App: React.FC = () => {
             <RouterProvider router={router} />
         </React.StrictMode>
     );
-}
+};
 
 export default App;

@@ -5,6 +5,8 @@ export function loggerMiddleware(
     response: Response,
     next: NextFunction
 ) {
-    console.log(`(${request.method}) ${request.protocol}://${request.get('host')}${request.originalUrl}`);
+    console.log(
+        `(${request.method}) ${request.protocol}://${request.get('host')}${request.originalUrl}`
+    );
     next();
 }

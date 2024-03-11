@@ -1,4 +1,4 @@
-import {ServerResponse} from "./response.model";
+import { ServerResponse } from './response.model';
 
 export interface IUser {
     email: string;

@@ -1,14 +1,12 @@
-
 class HttpService {
-
     public static async get<V>(url: string): Promise<V> {
         return new Promise<V>(async (resolve, reject) => {
             try {
                 const fetchResponse: Response = await fetch(url, {
                     headers: {
-                        "Content-Type": "application/json",
+                        'Content-Type': 'application/json',
                     },
-                    method: "GET",
+                    method: 'GET',
                 });
                 if (!fetchResponse.ok) {
                     reject(fetchResponse.statusText);
@@ -26,15 +24,15 @@ class HttpService {
                 const fetchResponse: Response = await fetch(url, {
                     body: JSON.stringify(data),
                     headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Headers": "*",
-                        "Access-Control-Allow-Methods": "*",
-                        "Access-Control-Allow-Credentials": "true",
-                        "Access-Control-Max-Age": "1728000"
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Headers': '*',
+                        'Access-Control-Allow-Methods': '*',
+                        'Access-Control-Allow-Credentials': 'true',
+                        'Access-Control-Max-Age': '1728000',
                     },
-                    method: "POST",
+                    method: 'POST',
                 });
                 resolve(await fetchResponse.json());
             } catch (err) {
@@ -42,7 +40,6 @@ class HttpService {
             }
         });
     }
-
 }
 
 export default HttpService;

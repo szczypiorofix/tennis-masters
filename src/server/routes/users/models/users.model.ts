@@ -1,4 +1,5 @@
-import {Document, Types} from 'mongoose';
-import {IUser} from '../../../../shared';
+import { Document, Types } from 'mongoose';
 
-export type UserResults = (Document<IUser> & IUser & {_id: Types.ObjectId})[];
+import { IUser } from '../../../../shared';
+
+export type UserResults = (Document<IUser> & IUser & { _id: Types.ObjectId })[];

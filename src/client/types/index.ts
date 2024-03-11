@@ -1,4 +1,3 @@
-
 export interface IApp {
     view: APP_VIEW;
 }
@@ -7,25 +6,25 @@ export enum APP_VIEW {
     HOME,
     ADMIN,
     LOGIN,
-    REGISTER
+    REGISTER,
 }
 
 export const viewNameResolve = (app: APP_VIEW): string => {
-    switch(app) {
+    switch (app) {
         case APP_VIEW.ADMIN:
-            return "DASHBOARD";
+            return 'DASHBOARD';
         case APP_VIEW.HOME:
-            return "STRONA GŁÓWNA";
+            return 'STRONA GŁÓWNA';
         case APP_VIEW.LOGIN:
-            return "LOGOWANIE";
+            return 'LOGOWANIE';
         case APP_VIEW.REGISTER:
-            return "REJESTRACJA";
+            return 'REJESTRACJA';
         default:
-                return "";
+            return '';
     }
-}
+};
 
 export type AppContextType = {
     app: IApp;
     setView: (view: APP_VIEW) => void;
-}
+};

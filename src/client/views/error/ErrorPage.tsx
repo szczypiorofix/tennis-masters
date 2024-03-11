@@ -1,10 +1,12 @@
-import React from "react";
-import {isRouteErrorResponse, useRouteError} from "react-router-dom";
+import React from 'react';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
-import {ErrorResponse} from "@remix-run/router/utils";
+import { ErrorResponse } from '@remix-run/router/utils';
 
 const ErrorPage: React.FC = () => {
-    const error: ErrorResponse | Error = useRouteError() as ErrorResponse | Error;
+    const error: ErrorResponse | Error = useRouteError() as
+        | ErrorResponse
+        | Error;
     if (isRouteErrorResponse(error)) {
         return (
             <div id="error-page">
@@ -18,8 +20,7 @@ const ErrorPage: React.FC = () => {
                 )}
             </div>
         );
-    }
-    else if (error instanceof Error) {
+    } else if (error instanceof Error) {
         return (
             <div id="error-page">
                 <h1>Oops! Unexpected Error</h1>
@@ -31,6 +32,6 @@ const ErrorPage: React.FC = () => {
         );
     }
     return <></>;
-}
+};
 
 export default ErrorPage;

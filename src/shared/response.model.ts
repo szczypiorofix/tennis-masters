@@ -5,7 +5,7 @@ export interface ServerResponse {
 }
 
 export enum CONNECTION_STATUS {
-    DISCONNECTED = "rozłączony",
-    CONNECTING = "łączenie",
-    CONNECTED = "połączony"
+    DISCONNECTED = 'rozłączony',
+    CONNECTING = 'łączenie',
+    CONNECTED = 'połączony',
 }

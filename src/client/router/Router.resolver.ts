@@ -1,10 +1,9 @@
-
 const urlResolver = () => {
-  return {
-    resolve: (url: string) => {
-      return url;
-    }
-  };
-}
+    return {
+        resolve: (url: string) => {
+            return url;
+        },
+    };
+};
 
 export default urlResolver;

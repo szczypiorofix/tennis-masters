@@ -13,16 +13,12 @@ const NetworkSignalLabel = styled.p`
     padding: 8px 12px;
 `;
 
-const NetworkSignal= styled.div<{ $statusColor?: string }>`
+const NetworkSignal = styled.div<{ $statusColor?: string }>`
     width: 12px;
     height: 12px;
-    background-color: ${ props => props.$statusColor };
+    background-color: ${(props) => props.$statusColor};
     border: none;
     border-radius: 50%;
 `;
 
-export {
-    NetworkSignalContainer,
-    NetworkSignalLabel,
-    NetworkSignal
-}
+export { NetworkSignalContainer, NetworkSignalLabel, NetworkSignal };

@@ -1,16 +1,16 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 
-import {Container, Row} from '../../shared/components';
+import { Container, Row } from '../../shared/components';
 import {
     FormComponent,
     InputComponents,
     InputGroupComponent,
     LabelComponent,
-    SubmitButtonComponent
+    SubmitButtonComponent,
 } from './Login.style';
 import HttpService from '../../services/HttpService';
-import {ServerResponseUser, validateEmail} from '../../../shared';
-import {loginRoute} from '../../router';
+import { ServerResponseUser, validateEmail } from '../../../shared';
+import { loginRoute } from '../../router';
 
 interface UserLoginCredentials {
     email: string;
@@ -20,40 +20,47 @@ interface UserLoginCredentials {
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMsg, setErrorMsg] = useState<string>("");
+    const [errorMsg, setErrorMsg] = useState<string>('');
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
     };
 
-    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (!validateEmail(email)) {
-            console.error("Invalid email");
-            return;
-        }
-        const userCredentials: UserLoginCredentials = {
-            email: email,
-            password: password
-        };
-        HttpService
-            .post<UserLoginCredentials, ServerResponseUser>(loginRoute, userCredentials)
-            .then((response) => {
-                console.log(response);
-                if (response.error) {
-                    setErrorMsg(response.message);
-                }
-            })
-            .catch(err => {
-                setEmail("");
-                setPassword("");
-                setErrorMsg(err);
-            });
-    },[email, password]);
+    const handleSubmit = useCallback(
+        (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            if (!validateEmail(email)) {
+                console.error('Invalid email');
+                return;
+            }
+            const userCredentials: UserLoginCredentials = {
+                email: email,
+                password: password,
+            };
+            HttpService.post<UserLoginCredentials, ServerResponseUser>(
+                loginRoute,
+                userCredentials
+            )
+                .then((response) => {
+                    console.log(response);
+                    if (response.error) {
+                        setErrorMsg(response.message);
+                    }
+                })
+                .catch((err) => {
+                    setEmail('');
+                    setPassword('');
+                    setErrorMsg(err);
+                });
+        },
+        [email, password]
+    );
 
     return (
         <Container>
@@ -64,16 +71,24 @@ const Login: React.FC = () => {
                 <FormComponent onSubmit={handleSubmit}>
                     <InputGroupComponent>
                         <LabelComponent>E-mail:</LabelComponent>
-                        <InputComponents type="text" value={email} onChange={handleEmailChange} />
+                        <InputComponents
+                            type="text"
+                            value={email}
+                            onChange={handleEmailChange}
+                        />
                     </InputGroupComponent>
                     <InputGroupComponent>
                         <LabelComponent>Password:</LabelComponent>
-                        <InputComponents type="password" value={password} onChange={handlePasswordChange} />
+                        <InputComponents
+                            type="password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                        />
                     </InputGroupComponent>
-                    { errorMsg.length > 0 && (
-                        <p>{errorMsg}</p>
-                    )}
-                    <SubmitButtonComponent type="submit">Login</SubmitButtonComponent>
+                    {errorMsg.length > 0 && <p>{errorMsg}</p>}
+                    <SubmitButtonComponent type="submit">
+                        Login
+                    </SubmitButtonComponent>
                 </FormComponent>
             </Row>
         </Container>

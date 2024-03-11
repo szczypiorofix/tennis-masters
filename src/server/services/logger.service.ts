@@ -1,13 +1,21 @@
 import fs from 'fs';
-import * as path from "path";
+import * as path from 'path';
 import os from 'os';
-import {ERROR_LEVEL} from "../../shared/error-level.enum";
+
+import { ERROR_LEVEL } from '../../shared/error-level.enum';
 
 class LoggerService {
-    public static readonly LoggerFileName: string = path.join(__dirname, "../", "server.log");
+    public static readonly LoggerFileName: string = path.join(
+        __dirname,
+        '../',
+        'server.log'
+    );
 
     public static info(message: string, printToConsole: boolean = true) {
-        const formattedErrorMessage: string = LoggerService.parseErrorText(ERROR_LEVEL.INFO, message);
+        const formattedErrorMessage: string = LoggerService.parseErrorText(
+            ERROR_LEVEL.INFO,
+            message
+        );
         if (printToConsole) {
             console.log(formattedErrorMessage);
         }
@@ -15,7 +23,10 @@ class LoggerService {
     }
 
     public static warn(message: string, printToConsole: boolean = true) {
-        const formattedErrorMessage: string = LoggerService.parseErrorText(ERROR_LEVEL.WARM, message);
+        const formattedErrorMessage: string = LoggerService.parseErrorText(
+            ERROR_LEVEL.WARM,
+            message
+        );
         if (printToConsole) {
             console.log(formattedErrorMessage);
         }
@@ -23,7 +34,10 @@ class LoggerService {
     }
 
     public static error(message: string, printToConsole: boolean = true) {
-        const formattedErrorMessage: string = LoggerService.parseErrorText(ERROR_LEVEL.ERROR, message);
+        const formattedErrorMessage: string = LoggerService.parseErrorText(
+            ERROR_LEVEL.ERROR,
+            message
+        );
         if (printToConsole) {
             console.log(formattedErrorMessage);
         }
@@ -31,7 +45,10 @@ class LoggerService {
     }
 
     public static critical(message: string, printToConsole: boolean = true) {
-        const formattedErrorMessage: string = LoggerService.parseErrorText(ERROR_LEVEL.CRITICAL, message);
+        const formattedErrorMessage: string = LoggerService.parseErrorText(
+            ERROR_LEVEL.CRITICAL,
+            message
+        );
         if (printToConsole) {
             console.log(formattedErrorMessage);
         }
@@ -44,15 +61,22 @@ class LoggerService {
     }
 
     private static saveToFile(message: string) {
-        fs.writeFile(LoggerService.LoggerFileName, `${message}${os.EOL}`,  {
-            flag: 'a',
-            encoding: "utf8"
-        },err => {
-            if (err) {
-                console.error(err.message);
-                console.error(`Cannot save log file ${LoggerService.LoggerFileName} !`);
+        fs.writeFile(
+            LoggerService.LoggerFileName,
+            `${message}${os.EOL}`,
+            {
+                flag: 'a',
+                encoding: 'utf8',
+            },
+            (err) => {
+                if (err) {
+                    console.error(err.message);
+                    console.error(
+                        `Cannot save log file ${LoggerService.LoggerFileName} !`
+                    );
+                }
             }
-        });
+        );
     }
 }
 
