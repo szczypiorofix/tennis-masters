@@ -1,13 +1,6 @@
 # compiled output
-/client/dist
-/client/build
-/client/node_modules
-
-/server/dist
-/server/build
-/server/node_modules
-
 /dist
+/node_modules
 /build
 
 # Logs
@@ -48,15 +41,6 @@ lerna-debug.log*
 .env.test.local
 .env.production.local
 .env.local
-
-/server/.env
-/server/.env.development.local
-/server/.env.test.local
-/server/.env.production.local
-/server/.env.local
-
-# typescript
-*.tsbuildinfo
 
 # temp directory
 .temp
