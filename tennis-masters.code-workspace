@@ -22,5 +22,15 @@
             "**/.DS_Store": true,
             "**/node_modules": true,
         },
+        "rest-client.environmentVariables": {
+            "$shared": {
+
+            },
+            "local": {
+                "version": "v1",
+                "host": "localhost",
+                "port": "3000"
+            }
+        }
     },
 }
