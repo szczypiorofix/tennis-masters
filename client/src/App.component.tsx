@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { AppContext, appContextDefaultState } from '../storage/AppContext.storage';
-import { AppContectModel } from '../models/AppContext.model';
-import { Header } from './header/Header.component';
+import { AppContext, appContextDefaultState } from './storage/AppContext.storage';
+import { AppContectModel } from './models/AppContext.model';
+import { Header } from './components/header/Header.component';
 
 const App: React.FC = ({children}) => {
     const [ state ] = useState<AppContectModel>(appContextDefaultState);
