@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { AppContectModel } from '../models/AppContext.model';
+import { AppContectModel } from '../shared/models';
 
 export const appContextDefaultState: AppContectModel = {
     version: "0.0.1",

@@ -4,14 +4,15 @@ import { createBrowserRouter } from "react-router-dom";
 import App from './App.component';
 import { Home } from './routes/Home.route';
 import { Login } from './routes/Login.route';
+import { ROUTER_PATH } from './shared/enums';
 
 export const MainRouter = createBrowserRouter([
     {
-        path: "/",
+        path: ROUTER_PATH.HOME,
         element: <App><Home/></App>
     },
     {
-        path: "/login",
+        path: ROUTER_PATH.LOGIN,
         element: <App><Login/></App>
     }
 ], {
