@@ -4,11 +4,12 @@ import { AppContext, appContextDefaultState } from '../storage/AppContext.storag
 import { AppContectModel } from '../models/AppContext.model';
 import { Header } from './header/Header.component';
 
-export const App: React.FC = () => {
-    const [state] = useState<AppContectModel>(appContextDefaultState);
-    return <AppContext.Provider
-        value={ state }
-    >
-        <Header></Header>
+const App: React.FC = ({children}) => {
+    const [ state ] = useState<AppContectModel>(appContextDefaultState);
+    return <AppContext.Provider value={ state } >
+        <Header />
+        { children }
     </AppContext.Provider>
 }
+
+export default App;
