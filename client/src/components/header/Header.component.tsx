@@ -1,14 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 
-const Title = styled.h1`
-  font-size: 2.25em;
-  text-align: center;
-  color: #BF4F74;
-`;
+import { Li, Link, Title, Ul } from './Header.styled';
 
 export const Header: React.FC = () => {
     return <header>
         <Title>Tennis Masters</Title>
+        <Ul>
+            <Li>
+                <Link  to="/">Home</Link>
+            </Li>
+            <Li>
+                <Link  to="/login">Login</Link>
+            </Li>
+        </Ul>
     </header>
 }

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { AppContext, appContextDefaultState } from './storage/AppContext.storage';
-import { AppContectModel } from './shared/models';
-import { Header } from './components/header/Header.component';
 import { Footer } from './components/footer/Footer.component';
+import { Header } from './components/header/Header.component';
+import { AppContectModel } from './shared/models';
+import { AppContext, appContextDefaultState } from './storage/AppContext.storage';
 
-const App: React.FC = ({children}) => {
+export const App: React.FC = ({ children }) => {
     const [ state ] = useState<AppContectModel>(appContextDefaultState);
     return <AppContext.Provider value={ state } >
         <Header />
@@ -13,5 +13,3 @@ const App: React.FC = ({children}) => {
         <Footer />
     </AppContext.Provider>
 }
-
-export default App;
