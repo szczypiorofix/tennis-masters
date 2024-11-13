@@ -29,8 +29,8 @@ export const MainRouter = createBrowserRouter(
     ],
     {
         /**
-        V7 REACT ROUTER DOM FUTURE FLAGS
-    */
+            V7 REACT ROUTER DOM FUTURE FLAGS
+        */
         future: {
             v7_relativeSplatPath: true,
             v7_fetcherPersist: true,
