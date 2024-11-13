@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run: echo "Running build for server application"
-      - run: cd ./server
+      - run: cd server
       - run: npm install
 
 workflows:
