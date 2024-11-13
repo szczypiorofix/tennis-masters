@@ -1,0 +1,34 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.2
+
+jobs:
+   build_server:
+    executor: node/default
+    steps:
+      - checkout
+      - run: echo "Running build for server application"
+      - run: npm install --prefix ./server
+      - run: npm run test --prefix ./server
+   build_client:
+    executor: node/default
+    steps:
+      - checkout
+      - run: echo "Running build for client application"
+      - run: npm install --prefix ./client
+      - run: npm run test --prefix ./client
+
+workflows:
+  tests:
+    jobs:
+      - build_server:
+          filters:
+            branches:
+              only:
+               - development
+      - build_client:
+          filters:
+            branches:
+              only:
+               - development
