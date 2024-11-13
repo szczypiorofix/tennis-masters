@@ -4,15 +4,18 @@ orbs:
   node: circleci/node@5.2
 
 jobs:
-   build:
+   build_server:
     executor: node/default
     steps:
       - checkout
+      - run: echo "Running build for server application"
+      - run: cd ./server
+      - run: npm install
 
 workflows:
   tests:
     jobs:
-      - build:
+      - build_server:
           filters:
             branches:
               only:
