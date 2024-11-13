@@ -10,12 +10,14 @@ jobs:
       - checkout
       - run: echo "Running build for server application"
       - run: npm install --prefix ./server
+      - run: npm run test --prefix ./server
    build_client:
     executor: node/default
     steps:
       - checkout
       - run: echo "Running build for client application"
       - run: npm install --prefix ./client
+      - run: npm run test --prefix ./client
 
 workflows:
   tests:
