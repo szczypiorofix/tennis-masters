@@ -27,7 +27,7 @@ workflows:
           filters:
             branches:
               only:
-               - master
+               - development
       - node/test:
           # This is the node version to use for the `cimg/node` tag
           # Relevant tags can be found on the CircleCI Developer Hub
