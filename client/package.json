@@ -4,12 +4,16 @@
     "private": true,
     "scripts": {
         "start": "set PORT=8080 && react-scripts start",
-        "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
-        "build-dev": "react-scripts build",
+        "build:prod:win": "set \"REACT_APP_ENVIRONMENT=production\" && set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+        "build:prod:linux": "\"REACT_APP_ENVIRONMENT=production\" \"GENERATE_SOURCEMAP=false\" react-scripts build",
+        "build:dev:win": "set \"REACT_APP_ENVIRONMENT=development\" && react-scripts build",
+        "build:dev:linux": "\"REACT_APP_ENVIRONMENT=development\" react-scripts build",
+        "build:local:win": "set \"REACT_APP_ENVIRONMENT=localhost\" && react-scripts build",
+        "build:local:linux": "\"REACT_APP_ENVIRONMENT=localhost\" react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-        "eslintConfig": {
+    "eslintConfig": {
         "extends": "react-app"
     },
     "browserslist": {
@@ -36,11 +40,11 @@
         "uuid": "^9.0.0"
     },
     "devDependencies": {
+        "@eslint/js": "^9.14.0",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "12.1.5",
         "@testing-library/react-hooks": "^8.0.1",
         "@testing-library/user-event": "^13.5.0",
-        "@eslint/js": "^9.14.0",
         "@types/eslint__js": "^8.42.3",
         "@types/node": "^18.11.9",
         "@types/react": "^17.0.0",
