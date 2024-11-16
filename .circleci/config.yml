@@ -31,10 +31,10 @@ workflows:
   tm-workflow:
     jobs:
       - build_server:
-        filters:
-          branches:
-            only:
-             - development
+          filters:
+            branches:
+              only:
+              - development
       - build_client:
           requires:
             - build_server
