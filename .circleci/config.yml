@@ -28,20 +28,24 @@ jobs:
       - run: npm run build:dev:linux --prefix ./client
 
 workflows:
-  tests:
+  tm-workflow:
     jobs:
       - build_server:
           filters:
             branches:
               only:
-               - development
+              - development
       - build_client:
+          requires:
+            - build_server
           filters:
             branches:
               only:
-               - development
+                - development
       - build_deploy:
+          requires:
+            - build_client
           filters:
             branches:
               only:
-               - development
+                - development
