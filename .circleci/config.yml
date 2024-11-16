@@ -4,6 +4,12 @@ orbs:
   node: circleci/node@5.2
 
 jobs:
+   build_deploy:
+    executor: node/default
+    steps:
+      - checkout
+      - run: echo "Running build for deploy purpose"
+      - run: npm install
    build_server:
     executor: node/default
     steps:
@@ -30,6 +36,11 @@ workflows:
               only:
                - development
       - build_client:
+          filters:
+            branches:
+              only:
+               - development
+      - build_deploy:
           filters:
             branches:
               only:
