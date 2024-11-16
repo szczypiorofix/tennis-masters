@@ -19,7 +19,7 @@ jobs:
       - run: echo "Running build for client application"
       - run: npm install --prefix ./client
       - run: npm run test --prefix ./client
-      - run: npm run build --prefix ./client
+      - run: npm run build:dev:linux --prefix ./client
 
 workflows:
   tests:
