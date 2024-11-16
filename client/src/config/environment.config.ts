@@ -38,7 +38,7 @@ const environments: {[key in Environment | string]: EnvironmentScheme} = {
         domain: "localhost",
         port: "3000",
     },
-}
+};
 
 export function getEnvironmentDetails(environment: Environment | string): EnvironmentScheme {
     return  environments[environment];

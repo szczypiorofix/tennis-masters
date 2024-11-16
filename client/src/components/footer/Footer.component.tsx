@@ -7,5 +7,5 @@ export const Footer: React.FC = () => {
         <Copyrights>
             Copyrights 2024 Tennis Masters - Wszelkie Prawa Zastrzeżone. 
         </Copyrights>
-    </footer>
-}
+    </footer>;
+};

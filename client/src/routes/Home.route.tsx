@@ -22,7 +22,7 @@ export const Home: React.FC = () => {
         finally {
             setRun(false);
         }
-    }, [result]);
+    }, []);
 
     useEffect(() => {
         if (run) {
@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
     const makeApiCall = () => {
         console.log('Call to API...');
         setRun(true);
-    }
+    };
 
     return <div>
         <h1>Home page</h1>
@@ -47,5 +47,5 @@ export const Home: React.FC = () => {
         <div>
             <pre>{ result }</pre>
         </div>
-    </div>
-}
+    </div>;
+};

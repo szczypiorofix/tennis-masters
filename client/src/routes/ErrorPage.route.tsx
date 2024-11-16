@@ -16,4 +16,4 @@ export const ErrorPage = () => {
             <p>{error.data}</p>
         </div>
     );
-}
+};
