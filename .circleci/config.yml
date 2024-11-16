@@ -20,6 +20,7 @@ jobs:
       - run: npm run build --prefix ./server
    build_client:
     executor: node/default
+    requires
     steps:
       - checkout
       - run: echo "Running build for client application"
@@ -36,11 +37,15 @@ workflows:
               only:
                - development
       - build_client:
+          requires:
+            - build_server
           filters:
             branches:
               only:
                - development
       - build_deploy:
+          requires:
+            - build_client
           filters:
             branches:
               only:
