@@ -5,6 +5,8 @@ orbs:
 
 jobs:
    build_deploy:
+    executor: node/default
+    steps:
       - checkout
       - run: echo "Running build for deploy purpose"
       - run: npm install
