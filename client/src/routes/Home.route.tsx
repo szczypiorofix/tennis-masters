@@ -1,69 +1,51 @@
-import { EnvironmentScheme, getEnvironmentDetails } from '../config/environment.config';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-interface HomeApiCall {
-    run: boolean;
-    finished: boolean;
-    result: string;
-    env: string;
-}
+import { EnvironmentScheme, getEnvironmentDetails } from '../config/environment.config';
 
 export const Home: React.FC = () => {
-    const [state, setState] = useState<HomeApiCall>({
-        run: false,
-        finished: false,
-        result: "",
-        env: process.env.REACT_APP_ENVIRONMENT || 'development'
-    });
+    const [run, setRun] = useState<boolean>(false);
+    const [result, setResult] = useState<string>("");
+    const [env] = useState<string>(process.env.REACT_APP_ENVIRONMENT || 'localhost');
+
+    const getData = useCallback(async () => {
+        const environmentVar: string = process.env.REACT_APP_ENVIRONMENT || 'development';
+        const environment: EnvironmentScheme = getEnvironmentDetails(environmentVar);
+
+        try {
+            const resp = await fetch(environment.url);
+            const response = await resp.json();
+            setResult(response.data);
+        } catch(e) {
+            console.error(e);
+            setResult(JSON.stringify(e));
+        }
+        finally {
+            setRun(false);
+        }
+    }, [result]);
 
     useEffect(() => {
-        if (state.run && !state.finished) {
-            const environmentVar: string = process.env.REACT_APP_ENVIRONMENT || 'development';
-            const environment: EnvironmentScheme = getEnvironmentDetails(environmentVar);
-
-            let responseResult = "";
-            fetch(environment.url)
-            .then((res) => res.json())
-            .then(result => {
-                console.log('Result: ', result);
-                responseResult = result.data; 
-            })
-            .catch(err => {
-                console.error(err);
-                responseResult = JSON.stringify(err);
-            })
-            .finally(() => {
-                setState({
-                    ...state,
-                    result: responseResult,
-                    run: false,
-                    finished: true
-                });
-            });
+        if (run) {
+          getData().then(() => setRun(false));
         }
-    }, [state.run]);
+      }, [run, getData]);
 
     const makeApiCall = () => {
         console.log('Call to API...');
-        setState({
-            ...state,
-            result: "",
-            run: true,
-            finished: false
-        });
+        setRun(true);
     }
 
     return <div>
         <h1>Home page</h1>
-        <p>REACT_APP_ENVIRONMENT: {state.env}</p>
+        <p>REACT_APP_ENVIRONMENT: {env}</p>
         <div>
             <button 
                 onClick={ makeApiCall }
-                disabled={state.run}
+                disabled={run}
             >Test API call:</button>
         </div>
         <div>
-            <pre>{ state.result }</pre>
+            <pre>{ result }</pre>
         </div>
     </div>
 }
