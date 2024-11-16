@@ -11,5 +11,5 @@ export const App: React.FC = ({ children }) => {
         <Header />
         { children }
         <Footer />
-    </AppContext.Provider>
-}
+    </AppContext.Provider>;
+};

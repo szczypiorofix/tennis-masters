@@ -13,5 +13,5 @@ export const Header: React.FC = () => {
                 <Link  to="/login">Login</Link>
             </Li>
         </Ul>
-    </header>
-}
+    </header>;
+};
