@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { EnvironmentScheme, getEnvironmentDetails } from '../config/environment.config';
+import { EnvironmentScheme, getEnvironmentDetails } from '../../config/environment.config';
 
 export const Home: React.FC = () => {
     const [run, setRun] = useState<boolean>(false);
     const [result, setResult] = useState<string>("");
-    const [env] = useState<string>(process.env.REACT_APP_ENVIRONMENT || 'localhost');
+    const env: string = process.env.REACT_APP_ENVIRONMENT || 'localhost';
 
     const getData = useCallback(async () => {
         const environmentVar: string = process.env.REACT_APP_ENVIRONMENT || 'development';
