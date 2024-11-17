@@ -2,8 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import { App } from "./App.component";
 import { ErrorPage } from "./routes";
-import { Home } from "./routes/Home.route";
-import { Login } from "./routes/Login.route";
+import { Home, Login } from "./routes/";
 import { ROUTER_PATH } from "./shared/enums";
 
 export const MainRouter = createBrowserRouter(
