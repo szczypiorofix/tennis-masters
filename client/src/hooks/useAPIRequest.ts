@@ -1,6 +1,6 @@
 import {useCallback, useState} from 'react';
 
-export const ueAPIRequest = <T,>(url: string, defaultValue: T): [(requestOptions: RequestInit) => void, T, boolean, boolean, string] => {
+export const useAPIRequest = <T,>(url: string, defaultValue: T): [(requestOptions: RequestInit) => void, T, boolean, boolean, string] => {
     const [response, setResponse] = useState<T>(defaultValue);
     const [ loading, setLoading ] = useState<boolean>(false);
     const [ hasError, setHasError ] = useState<boolean>(false);

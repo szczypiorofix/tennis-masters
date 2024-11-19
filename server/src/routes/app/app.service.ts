@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
+import { TestData } from '../../models';
+
 @Injectable()
 export class AppService {
     getHello(): string {
-        return JSON.stringify({
-            'data': 'MAIN: main'
-        });
+        const testData: TestData = {
+            name: "Tennis Masters",
+            path: "/",
+            version: "0.0.1"
+        };
+        return JSON.stringify(testData);
     }
 }

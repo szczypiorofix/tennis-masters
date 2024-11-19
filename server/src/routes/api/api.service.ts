@@ -1,15 +1,23 @@
 import { Injectable } from '@nestjs/common';
 
+import { TestData } from '../../models';
+
 @Injectable()
 export class ApiService {
     public getWelcome() {
-        return JSON.stringify({
-            'data': 'API: main'
-        });
+        const testData: TestData = {
+            name: "Tennis Masters",
+            path: "/api/",
+            version: "0.0.1"
+        };
+        return JSON.stringify(testData);
     }
     public getAllData() {
-        return JSON.stringify({
-            'data': 'API: allData'
-        });
+        const testData: TestData = {
+            name: "Tennis Masters",
+            path: "/api/all",
+            version: "0.0.1"
+        };
+        return JSON.stringify(testData);
     }
 }
