@@ -8,7 +8,7 @@ export class ApiController {
     constructor(private readonly apiService: ApiService) {}
     
     @Get()
-    getWelcome(@Req() request: Request): string {
+    getWelcome(@Req() request?: Request): string {
         return this.apiService.getWelcome();
     }
 

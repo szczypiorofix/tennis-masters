@@ -1,51 +1,39 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 import { EnvironmentScheme, getEnvironmentDetails } from '../../config/environment.config';
+import { useAPIRequest } from '../../hooks/useAPIRequest';
+import { TestDataModel } from '../../shared/models';
+
+const defaultTetData: TestDataModel = {
+    name: "<default name>",
+    path: "<default path>",
+    version: "<default version>",
+};
 
 export const Home: React.FC = () => {
-    const [run, setRun] = useState<boolean>(false);
-    const [result, setResult] = useState<string>("");
-    const env: string = process.env.REACT_APP_ENVIRONMENT || 'localhost';
+    const environmentVar: string = process.env.REACT_APP_ENVIRONMENT || 'localhost';
+    const environment: EnvironmentScheme = getEnvironmentDetails(environmentVar);
+    const [execute, response, loading, hasError, errorMessage] = useAPIRequest<TestDataModel>(environment.url, defaultTetData);
 
-    const getData = useCallback(async () => {
-        const environmentVar: string = process.env.REACT_APP_ENVIRONMENT || 'development';
-        const environment: EnvironmentScheme = getEnvironmentDetails(environmentVar);
-
-        try {
-            const resp = await fetch(environment.url);
-            const response = await resp.json();
-            setResult(response.data);
-        } catch(e) {
-            console.error(e);
-            setResult(JSON.stringify(e));
-        }
-        finally {
-            setRun(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (run) {
-          getData().then(() => setRun(false));
-        }
-      }, [run, getData]);
-
-    const makeApiCall = () => {
-        console.log('Call to API...');
-        setRun(true);
+    const requestOptions: RequestInit = {
+        method: "GET"
     };
 
     return <div>
         <h1>Home page</h1>
-        <p>REACT_APP_ENVIRONMENT: {env}</p>
+        <p>REACT_APP_ENVIRONMENT: {environmentVar}</p>
         <div>
             <button 
-                onClick={ makeApiCall }
-                disabled={run}
+                onClick={() => execute(requestOptions)}
+                disabled={loading}
             >Test API call:</button>
         </div>
         <div>
-            <pre>{ result }</pre>
+            { loading && <p>Loading...</p> }
+        </div>
+        {hasError && <p>ERROR: {errorMessage}</p>}
+        <div>
+            <pre>{ JSON.stringify(response) }</pre>
         </div>
     </div>;
 };
