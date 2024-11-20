@@ -1,19 +1,18 @@
-import { Controller, Get, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get } from '@nestjs/common';
 
 import { ApiService } from './api.service';
 
 @Controller('api')
 export class ApiController {
-    constructor(private readonly apiService: ApiService) {}
-    
-    @Get()
-    getWelcome(@Req() request?: Request): string {
-        return this.apiService.getWelcome();
-    }
+  constructor(private readonly apiService: ApiService) {}
 
-    @Get('/all')
-    getAllData(@Req() request: Request): string {
-        return this.apiService.getAllData();
-    }
+  @Get()
+  getWelcome(): string {
+    return this.apiService.getWelcome();
+  }
+
+  @Get('/all')
+  getAllData(): string {
+    return this.apiService.getAllData();
+  }
 }
