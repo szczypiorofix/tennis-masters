@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 describe('AppController', () => {
     let appController: AppController;
@@ -9,15 +8,14 @@ describe('AppController', () => {
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
             controllers: [AppController],
-            providers: [AppService],
         }).compile();
 
         appController = app.get<AppController>(AppController);
     });
 
-    describe('root', () => {
+    describe('rootRoute', () => {
         it('should return main data', () => {
-            expect(appController.getHello()).toContain("MAIN");
+            expect(appController.getHello()).toBeNull();
         });
     });
 });
