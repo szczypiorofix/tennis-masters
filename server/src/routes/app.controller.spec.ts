@@ -14,7 +14,7 @@ describe('AppController', () => {
   });
 
   describe('rootRoute', () => {
-    it('should return main data', () => {
+    it('should return null for base url', () => {
       expect(appController.getHello()).toBeNull();
     });
   });
