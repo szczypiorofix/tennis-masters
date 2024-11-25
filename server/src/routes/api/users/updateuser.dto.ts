@@ -1,14 +1,4 @@
-export type CreateUserParams = {
-    email: string;
-    password: string;
-    fistname: string;
-    lastname: string;
-    address: string;
-    city: string;
-    country: string;
-};
-
-export type UpdateUserParams = {
+export class UpdateUserDto {
     id: number;
     email: string;
     password: string;
@@ -21,4 +11,4 @@ export type UpdateUserParams = {
     lastlogin: string;
     exp: number;
     level: number;
-};
+}

@@ -1,5 +1,29 @@
-GET http://{host}:{port}/api/v1/users HTTP/1.1
+GET http://{{host}}:{{port}}/api HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ###
 
+GET http://{{host}}:{{port}}/api/all HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+###
+
+GET http://{{host}}:{{port}}/api/users HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+###
+
+POST http://{{host}}:{{port}}/api/users HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "email@o2.pl",
+    "password": "NewPassword1",
+    "fistname": "Jan",
+    "lastname": "Kowalski",
+    "address": "ul. Kwiatowa 14",
+    "city": "Pułtusk",
+    "country": "Poland"
+}
+###
