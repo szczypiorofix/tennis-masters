@@ -1,25 +1,20 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { DatabaseConfigModule } from '../../database/database-config.module';
+import { DatabaseConfigService } from '../../database/database-config.service';
 import { ApiController } from './api.controller';
 import { ApiService } from './api.service';
-import { DatabaseConfigService } from 'src/services/database-config.service';
-import { allEntities } from 'src/typeorm/entities';
 import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-        type: 'mysql',
-        host: process.env.DBHOST,
-        port: parseInt(process.env.DBPORT),
-        username: process.env.DBUSER,
-        password: process.env.DBPASS,
-        database: process.env.DBNAME,
-        entities: [...allEntities],
-        synchronize: true,
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [DatabaseConfigModule],
+      inject: [DatabaseConfigService],
+      useFactory: (databaseConfigService: DatabaseConfigService) => databaseConfigService.getDatabaseConfig()
     }),
     UsersModule,
   ],

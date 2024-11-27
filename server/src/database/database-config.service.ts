@@ -17,6 +17,6 @@ export class DatabaseConfigService {
             database: this.configService.get("DBNAME"),
             entities: allEntities,
             synchronize: true,
-        } as TypeOrmModuleOptions;
+        }
     }
 }
