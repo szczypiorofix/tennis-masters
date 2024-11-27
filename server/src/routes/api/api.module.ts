@@ -1,24 +1,27 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UsersModule } from 'src/routes/api/users/users.module';
-import { UserEntitiy } from 'src/typeorm/entities/user.entity';
 import { ApiController } from './api.controller';
 import { ApiService } from './api.service';
+import { DatabaseConfigService } from 'src/services/database-config.service';
+import { allEntities } from 'src/typeorm/entities';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'tennismasters',
-      entities: [UserEntitiy],
-      synchronize: true,
+        type: 'mysql',
+        host: process.env.DBHOST,
+        port: parseInt(process.env.DBPORT),
+        username: process.env.DBUSER,
+        password: process.env.DBPASS,
+        database: process.env.DBNAME,
+        entities: [...allEntities],
+        synchronize: true,
     }),
-    UsersModule
+    UsersModule,
   ],
   controllers: [ApiController],
   providers: [ApiService],
