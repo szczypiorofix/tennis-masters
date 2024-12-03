@@ -20,7 +20,7 @@ Content-Type: application/json
 {
     "email": "email@o2.pl",
     "password": "NewPassword1",
-    "fistname": "Jan",
+    "firstname": "Jan",
     "lastname": "Kowalski",
     "address": "ul. Kwiatowa 14",
     "city": "Pułtusk",

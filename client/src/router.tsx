@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { App } from "./App.component";
 import { ErrorPage } from "./routes";
 import { Home, Login } from "./routes/";
+import { Rankings } from "./routes/rankings/Rankings.route";
 import { ROUTER_PATH } from "./shared/enums";
 
 export const MainRouter = createBrowserRouter(
@@ -21,6 +22,15 @@ export const MainRouter = createBrowserRouter(
             element: (
                 <App>
                     <Login />
+                </App>
+            ),
+            errorElement: <ErrorPage />,
+        },
+        {
+            path: ROUTER_PATH.RANKINGS,
+            element: (
+                <App>
+                    <Rankings />
                 </App>
             ),
             errorElement: <ErrorPage />,
