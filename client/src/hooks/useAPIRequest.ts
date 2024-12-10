@@ -15,14 +15,12 @@ export const useAPIRequest = <T,>(url: string, defaultValue: T): [(requestOption
                     console.error("useAPIRequest: ", responseString);
                     setHasError(true);
                     setErrorMessage("API request error: " + JSON.stringify(responseString));
-                    setLoading(false);
                 }
                 const responseResult: T = await response.json() as T;
                 setResponse(responseResult);
             } catch(err) {
                 console.error("useAPIRequest: ", err);
                 setErrorMessage("API request error: " + JSON.stringify(response));
-                setLoading(false);
                 setHasError(true);
             }
             finally {
