@@ -1,11 +1,14 @@
-import { NavContainer, NavList, NavListItem,NavListItemLink } from "./Nav.styled"
+import { NavComponentsProps } from '../models';
+import { NavContainer, NavLi, NavLiA, NavUl} from "./Nav.styled"
 
-export const NavComponent: React.FC = () => {
+export const NavComponent = (props: NavComponentsProps): React.JSX.Element => {
     return <NavContainer>
-        <NavList>
-            <NavListItem>
-                <NavListItemLink href="https://google.pl">Google Home</NavListItemLink>
-            </NavListItem>
-        </NavList>
+        <NavUl>
+            { props.navList.list.map((navElement) => 
+            <NavLi key={'navList'+navElement.id}>
+                <NavLiA $active={navElement.id === props.navList.activeId} href={ navElement.urlPath }>{ navElement.title }</NavLiA>
+            </NavLi>
+            ) }
+        </NavUl>
     </NavContainer>
 }
