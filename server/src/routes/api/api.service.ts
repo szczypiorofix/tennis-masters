@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { TestData } from '../../models';
+import { TestData } from '../../shared/models';
 
 @Injectable()
 export class ApiService {
