@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Copyrights } from './Footer.styled';
+import { CopyrightsDiv } from './Footer.styled';
 
-export const FooterComponent: React.FC = () => {
+export const FooterComponent = (): React.JSX.Element => {
     return <footer>
-        <Copyrights>
+        <CopyrightsDiv>
             Copyrights 2024 Tennis Masters - Wszelkie Prawa Zastrzeżone. 
-        </Copyrights>
+        </CopyrightsDiv>
     </footer>;
 };

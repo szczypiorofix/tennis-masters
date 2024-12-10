@@ -10,7 +10,7 @@ const defaultTetData: TestDataModel = {
     version: "<default version>",
 };
 
-export const Home: React.FC = () => {
+export const Home = (): React.JSX.Element => {
     const environmentVar: string = process.env.REACT_APP_ENVIRONMENT || 'localhost';
     const environment: EnvironmentScheme = getEnvironmentDetails(environmentVar);
     const [execute, response, loading, hasError, errorMessage] = useAPIRequest<TestDataModel>(environment.url, defaultTetData);
