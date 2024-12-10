@@ -6,35 +6,41 @@ import { TableComponent as Table } from '../../components/table/Table.component'
 import { EnvironmentScheme, getEnvironmentDetails } from '../../config/environment.config';
 import { useAPIRequest } from '../../hooks/useAPIRequest';
 import { User } from '../../shared/models';
+import { ContainerComponent } from '../../components/container/Container.component';
 
 const defaultTetData: User[] = [];
 
-export const Rankings: React.FC = () => {
+const rankingsRequestOptions: RequestInit = {
+    method: "GET"
+};
+
+export const Rankings = (): React.JSX.Element => {
     const environmentVar: string = process.env.REACT_APP_ENVIRONMENT || 'localhost';
     const environment: EnvironmentScheme = getEnvironmentDetails(environmentVar);
     const [execute, response, loading, hasError, errorMessage] = useAPIRequest<User[]>(environment.url + "/users", defaultTetData);
 
-    const requestOptions: RequestInit = {
-        method: "GET"
-    };
-
     useEffect(() => {
-        if (!loading) {
+        if (!loading && response.length === 0) {
             console.log("Calling execute...");
-            execute(requestOptions);
+            execute(rankingsRequestOptions);
         }
-    }, [execute]);
+    }, [execute, loading, response.length]);
 
     const headers: TableHeader<User>[] = [
         {
             id: 0,
             name: 'id',
-            display: "ID"
+            display: "ID",
+            sortable: true,
+            numeric: true,
+            hidden: true
         },
         {
             id: 1,
             name: 'firstname',
-            display: "Imię"
+            display: "Imię",
+            sortable: true,
+            numeric: false,
         },
         {
             id: 2,
@@ -45,7 +51,7 @@ export const Rankings: React.FC = () => {
             id: 3,
             name: 'email',
             display: "E-mail" 
-        }
+        },
     ];
 
     return <div>
@@ -56,8 +62,12 @@ export const Rankings: React.FC = () => {
             { loading && <Spinner /> }
         </div>
         {hasError && <p>ERROR: {errorMessage}</p>}
-        <div>
-            { response && <Table data={ response } headers={ headers }></Table> }
-        </div>
+        <ContainerComponent>
+            { response && <Table
+                data={ response }
+                headers={ headers }
+                defaultSortColumn="id"
+            ></Table> }
+        </ContainerComponent>
     </div>;
 };
