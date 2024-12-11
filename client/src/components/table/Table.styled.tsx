@@ -8,6 +8,10 @@ const TableContainer = styled.div`
     margin: 12px auto;
     padding: 12px;
     max-width: 60%;
+    border: 1px solid rgb(226, 232, 240);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 2rem;
 `;
 
 const Table = styled.table`
@@ -18,16 +22,33 @@ const Table = styled.table`
     border-color: inherit;
     text-indent: 0;
     margin: 0 auto;
+    &::after, &::before {
+        border: 0 solid #e5e7eb;
+    }
 `;
 
 const TableHead = styled.thead`
     position: sticky;
     border: 0 solid #e5e7eb;
+    & > tr > th {
+        text-align: start;
+        border-color: rgb(229, 231, 235);
+        border-style: solid;
+        border-width: 0 0 1px 0;
+        padding: 14px;
+    }
 `;
 
 const TableBody = styled.tbody`
-    order: 0 solid #e5e7eb;
+    border: 0 solid #e5e7eb;
     box-sizing: border-box;
+    & > tr > td {
+        text-align: start;
+        border-color: rgb(229, 231, 235);
+        border-style: solid;
+        border-width: 0 0 1px 0;
+        padding: 14px;
+    }
 `;
 
 const Row = styled.tr`
