@@ -14,7 +14,7 @@ const TableContainer = styled.div`
     padding: 2rem;
 `;
 
-const Table = styled.table`
+const TableStyled = styled.table`
     min-width: 50rem;
     border-spacing: 0;
     border-collapse: separate;
@@ -27,7 +27,7 @@ const Table = styled.table`
     }
 `;
 
-const TableHead = styled.thead`
+const TableHeadStyled = styled.thead`
     position: sticky;
     border: 0 solid #e5e7eb;
     & > tr > th {
@@ -39,7 +39,7 @@ const TableHead = styled.thead`
     }
 `;
 
-const TableBody = styled.tbody`
+const TableBodyStyled = styled.tbody`
     border: 0 solid #e5e7eb;
     box-sizing: border-box;
     & > tr > td {
@@ -51,8 +51,16 @@ const TableBody = styled.tbody`
     }
 `;
 
-const Row = styled.tr`
+const TableTrStyled = styled.tr`
     padding: 4px;
+`;
+
+const TableTdStyled = styled.td`
+    padding: 4px;
+`;
+
+const TableThStyled = styled.th`
+    font-weight: bold;
 `;
 
 const SortingButton = styled.button<{ $active?: boolean; }>`
@@ -72,4 +80,5 @@ const SortingButton = styled.button<{ $active?: boolean; }>`
     }
 `;
 
-export { Table, TableContainer, Row, SortingButton, TableHead, TableBody };
+export { SortingButton, TableBodyStyled, TableContainer, TableHeadStyled, TableStyled, TableTdStyled, TableThStyled, TableTrStyled };
+

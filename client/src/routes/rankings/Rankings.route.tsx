@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 
 import { TableHeader } from '@/components/table/Table.model';
 import { SpinnerComponent as Spinner } from '../..//components/spinner/Spinner.component';
+import { ContainerComponent } from '../../components/container/Container.component';
+import { SORT_ORDER } from '../../components/enums';
 import { TableComponent as Table } from '../../components/table/Table.component';
 import { EnvironmentScheme, getEnvironmentDetails } from '../../config/environment.config';
 import { useAPIRequest } from '../../hooks/useAPIRequest';
 import { User } from '../../shared/models';
-import { ContainerComponent } from '../../components/container/Container.component';
 
 const defaultTetData: User[] = [];
 
@@ -33,7 +34,6 @@ export const Rankings = (): React.JSX.Element => {
             display: "ID",
             sortable: true,
             numeric: true,
-            hidden: true
         },
         {
             id: 1,
@@ -45,12 +45,16 @@ export const Rankings = (): React.JSX.Element => {
         {
             id: 2,
             name: 'lastname',
-            display: "Nazwisko"
+            display: "Nazwisko",
+            sortable: true,
+            numeric: false,
         },
         {
             id: 3,
             name: 'email',
-            display: "E-mail" 
+            display: "E-mail" ,
+            sortable: true,
+            numeric: false,
         },
     ];
 
@@ -61,12 +65,15 @@ export const Rankings = (): React.JSX.Element => {
         <div>
             { loading && <Spinner /> }
         </div>
+
         {hasError && <p>ERROR: {errorMessage}</p>}
+
         <ContainerComponent>
             { response && <Table
                 data={ response }
                 headers={ headers }
-                defaultSortColumn="id"
+                defaultSortColumn="firstname"
+                defaultSortOrder={SORT_ORDER.ASC}
             ></Table> }
         </ContainerComponent>
     </div>;

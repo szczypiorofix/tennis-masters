@@ -1,14 +1,14 @@
 import { NavComponentsProps } from '../models';
-import { NavContainer, NavLi, NavLiA, NavUl} from "./Nav.styled"
+import { NavLiAStyled, NavLiStyled, NavStyled, NavUlStyled } from "./Nav.styled";
 
 export const NavComponent = (props: NavComponentsProps): React.JSX.Element => {
-    return <NavContainer>
-        <NavUl>
+    return <NavStyled>
+        <NavUlStyled>
             { props.navList.list.map((navElement) => 
-            <NavLi key={'navList'+navElement.id}>
-                <NavLiA $active={navElement.id === props.navList.activeId} href={ navElement.urlPath }>{ navElement.title }</NavLiA>
-            </NavLi>
+            <NavLiStyled key={'navList'+navElement.id}>
+                <NavLiAStyled $active={navElement.id === props.navList.activeId} href={ navElement.urlPath }>{ navElement.title }</NavLiAStyled>
+            </NavLiStyled>
             ) }
-        </NavUl>
-    </NavContainer>
+        </NavUlStyled>
+    </NavStyled>
 }

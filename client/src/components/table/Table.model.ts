@@ -1,3 +1,9 @@
+import { SORT_ORDER } from "../enums";
+
+export const sortSignAsc = "\u2191";
+
+export const sortSignDesc = "\u2193";
+
 export interface TableHeader<T> {
     id: number;
     display: string;
@@ -12,4 +18,5 @@ export interface TableModel<T> {
     data: ReadonlyArray<T>;
     resultsPerPage?: number;
     defaultSortColumn?: keyof T;
+    defaultSortOrder?: SORT_ORDER;
 }

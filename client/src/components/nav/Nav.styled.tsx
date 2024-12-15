@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-const NavContainer = styled.nav`
+const NavStyled = styled.nav`
     width: 100%;
     display: block;
 `;
 
-const NavUl = styled.ul`
+const NavUlStyled = styled.ul`
     width: 100%;
     padding-left: 0;
     list-style: none;
@@ -14,11 +14,11 @@ const NavUl = styled.ul`
     background-color: #333;
 `;
 
-const NavLi = styled.li`
+const NavLiStyled= styled.li`
 
 `;
 
-const NavLiA = styled.a<{ $active?: boolean; }>`
+const NavLiAStyled = styled.a<{ $active?: boolean; }>`
     text-decoration: none;
     display: flex;
     color: #f2f2f2;
@@ -34,4 +34,4 @@ const NavLiA = styled.a<{ $active?: boolean; }>`
     }
 `;
 
-export { NavContainer, NavUl, NavLi, NavLiA };
+export { NavStyled, NavUlStyled, NavLiStyled, NavLiAStyled };

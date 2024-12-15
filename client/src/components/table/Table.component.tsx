@@ -1,29 +1,24 @@
 import React, { useEffect, useReducer, useState } from 'react';
 
+import { SORT_ORDER } from '../enums';
 import { sortTableDataByColumn } from './Table.helper';
-import { TableHeader, TableModel } from './Table.model';
+import { sortSignAsc, sortSignDesc, TableHeader, TableModel } from './Table.model';
 import {
-    Row,
-    Table,
-    TableContainer,
     SortingButton,
-    TableHead,
-    TableBody
+    TableBodyStyled,
+    TableContainer,
+    TableHeadStyled,
+    TableStyled,
+    TableTdStyled,
+    TableThStyled,
+    TableTrStyled
 } from './Table.styled';
 
-enum SORT_TYPE {
-    ASC,
-    DESC
-}
-
 export const TableComponent = <T,>(props: TableModel<T>): React.JSX.Element => {
-    const [sort, setSort] = useState<string | number | symbol>("");
-    const [sortType, setSortType] = useState<SORT_TYPE>(SORT_TYPE.ASC);
+    const [sort, setSort] = useState<string | number | symbol>("id");
+    const [sortOrder, setSortOrder] = useState<SORT_ORDER>(SORT_ORDER.ASC);
     const [tableData, setTableData] = useReducer(
-        (state: TableModel<T>, newState: TableModel<T>) => ({
-          ...state,
-          ...newState,
-        }), {
+        (state: TableModel<T>, newState: TableModel<T>) => ({...state, ...newState}), {
             headers: [],
             data: []
         }
@@ -31,10 +26,19 @@ export const TableComponent = <T,>(props: TableModel<T>): React.JSX.Element => {
 
     useEffect(() => {
         if (props.data.length) {
-            console.log('Set table data...');
+            if (props.defaultSortOrder) {
+                setSortOrder(props.defaultSortOrder);
+            }
+            if (props.defaultSortColumn && sort !== props.defaultSortColumn) {
+                setSort(props.defaultSortColumn);
+                const foundColumn = props.headers.find(item => item.name === props.defaultSortColumn);
+                if (foundColumn) {
+                    sortTableBy(foundColumn);
+                }
+            }
             setTableData(props);
-            setSort(props.defaultSortColumn || "");
         }
+
     }, [props]);
 
     const sortTableBy = (column: TableHeader<T>, ascend: boolean = true) => {
@@ -46,63 +50,63 @@ export const TableComponent = <T,>(props: TableModel<T>): React.JSX.Element => {
     }
 
     return <TableContainer>
-        <Table>
-            <TableHead>
-                <Row>
+        <TableStyled>
+            <TableHeadStyled>
+                <TableTrStyled>
                 { tableData.headers && tableData.headers.map(
                     (headerItem, headerIndex) => {
                         if (!headerItem.hidden) {
-                            return <th key={ "th" + headerIndex }>
+                            return <TableThStyled key={ "th" + headerIndex }>
                                 <div>
                                     <span>{ headerItem.display }</span>
                                     { headerItem.sortable && <div>
                                         <div>
                                             <SortingButton
-                                                $active={ sort === headerItem.name && sortType === SORT_TYPE.ASC }
+                                                $active={ sort === headerItem.name && sortOrder === SORT_ORDER.ASC }
                                                 onClick={() => {
-                                                    setSortType(SORT_TYPE.ASC);
+                                                    setSortOrder(SORT_ORDER.ASC);
                                                     setSort(headerItem.name);
                                                     sortTableBy(headerItem, true);
                                                 }}
                                             >
-                                                <span>&#8593;</span>
+                                                <span>{ sortSignAsc }</span>
                                             </SortingButton>
                                             <SortingButton
-                                                $active={ sort === headerItem.name && sortType === SORT_TYPE.DESC }
+                                                $active={ sort === headerItem.name && sortOrder === SORT_ORDER.DESC }
                                                 onClick={() => {
-                                                    setSortType(SORT_TYPE.DESC);
+                                                    setSortOrder(SORT_ORDER.DESC);
                                                     setSort(headerItem.name);
                                                     sortTableBy(headerItem, false);
                                                 }}
                                             >
-                                                <span>&#8595;</span>
+                                                <span>{ sortSignDesc }</span>
                                             </SortingButton>
                                         </div>
                                     </div> }
                                 </div>
-                            </th>
+                            </TableThStyled>
                         }
                         return null;
                     }
                 )}
-                </Row>
-            </TableHead>
-            <TableBody>
+                </TableTrStyled>
+            </TableHeadStyled>
+            <TableBodyStyled>
                 { tableData.data && tableData.data.map(
                     (rowItem, rowIndex) =>
-                        <Row key={"tr" + rowIndex}>
+                        <TableTrStyled key={"tr" + rowIndex}>
                             { tableData.headers && tableData.headers.map(
                                 (headerItem, headerIndex) => {
                                     if (!headerItem.hidden) {
-                                        return <td key={"td_"+headerIndex}>{ rowItem[headerItem.name] ?? '' }</td>
+                                        return <TableTdStyled key={"td_"+headerIndex}>{ rowItem[headerItem.name] ?? '' }</TableTdStyled>
                                     }
                                     return null;
                                 }
                             ) }
-                        </Row>
+                        </TableTrStyled>
                     )
                 }
-            </TableBody>
-        </Table>
+            </TableBodyStyled>
+        </TableStyled>
     </TableContainer>;
 };

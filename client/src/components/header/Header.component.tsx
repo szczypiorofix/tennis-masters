@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { TitleH1 } from './Header.styled';
-import { NavComponent as Nav } from '../nav/Nav.component';
 import { NavList } from '../models';
+import { NavComponent as Nav } from '../nav/Nav.component';
+import { TitleH1Styled } from './Header.styled';
 
 const HeaderNavList: NavList = {
     list: [
@@ -42,7 +42,7 @@ export const HeaderComponent = (): React.JSX.Element => {
         activeId: resolvedActiveNavElement
     };
     return <header>
-        <TitleH1>Tennis Masters</TitleH1>
+        <TitleH1Styled>Tennis Masters</TitleH1Styled>
         <Nav navList={ navList } />
     </header>;
 };
