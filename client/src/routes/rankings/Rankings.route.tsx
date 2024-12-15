@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { TableHeader } from '@/components/table/Table.model';
 import { SpinnerComponent as Spinner } from '../..//components/spinner/Spinner.component';
-import { ContainerComponent } from '../../components/container/Container.component';
+import { ContainerComponent as Container } from '../../components/container/Container.component';
 import { SORT_ORDER } from '../../components/enums';
 import { TableComponent as Table } from '../../components/table/Table.component';
 import { EnvironmentScheme, getEnvironmentDetails } from '../../config/environment.config';
@@ -68,13 +68,13 @@ export const Rankings = (): React.JSX.Element => {
 
         {hasError && <p>ERROR: {errorMessage}</p>}
 
-        <ContainerComponent>
+        <Container>
             { response && <Table
                 data={ response }
                 headers={ headers }
                 defaultSortColumn="firstname"
                 defaultSortOrder={SORT_ORDER.ASC}
             ></Table> }
-        </ContainerComponent>
+        </Container>
     </div>;
 };
