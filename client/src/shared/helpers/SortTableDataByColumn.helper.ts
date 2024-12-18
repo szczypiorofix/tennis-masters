@@ -1,6 +1,6 @@
-import { TableHeader } from "./Table.model";
+import { TableHeader } from "../../components/table/Table.model";
 
-export function sortTableDataByColumn<T>(data: T[], header: TableHeader<T>, ascend: boolean): T[] {
+export function sortTableDataByColumn<T>(data: readonly T[], header: TableHeader<T>, ascend: boolean): T[] {
     return [...data].sort((a, b) => {
       const valueA: string = ""+a[header.name];
       const valueB: string = ""+b[header.name];

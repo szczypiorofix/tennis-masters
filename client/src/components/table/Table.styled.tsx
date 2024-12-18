@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { IconButtonStyled } from '../button/Button.styled';
+
 const TableContainer = styled.div`
     background-color: #ffffff;
     max-height: 300px;
@@ -63,18 +65,18 @@ const TableThStyled = styled.th`
     font-weight: bold;
 `;
 
-const SortingButton = styled.button<{ $active?: boolean; }>`
+const SortingButton = styled(IconButtonStyled)<{ $active?: boolean; }>`
     color: black;
-    cursor: pointer;
     transition: all 0.1s ease-in-out;
-    border-style:solid;
+    border-style: solid;
     border-width: 1px;
     border-color: gray;
     background-color: ${props => props.$active ? "#CCCCCC" : "#EEEEEE" };
     border-radius: 3px;
     font-size: 700;
-    width: 24px;
-    height: 26px;
+    min-width: 28px;
+    min-height: 28px;
+    width: 100%;
     &:hover {
         background-color: #DDDDDD;
     }

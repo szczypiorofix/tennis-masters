@@ -4,4 +4,9 @@ const ButtonStyled = styled.button`
     cursor: pointer;
 `;
 
-export { ButtonStyled };
+const IconButtonStyled = styled(ButtonStyled)`
+        width: 28px;
+        height: 28px;
+`;
+
+export { ButtonStyled, IconButtonStyled };
