@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useSortTableBy } from '../../hooks/useSortTableBy';
 import { SORT_ORDER } from '../enums';
@@ -17,11 +17,7 @@ import {
 export const TableComponent = <T,>(props: TableModel<T>): React.JSX.Element => {
     const [loadedDataAtStart, SetLoadedDataAtStart] = useState<boolean>(false);
     const [sort, setSort] = useState<string | number | symbol>("id");
-    
-    function sortOrderReducer(state: SORT_ORDER, newState: SORT_ORDER) {
-        return newState;
-    }
-    const [sortOrder, setSortOrder] = useReducer(sortOrderReducer, SORT_ORDER.ASC);
+    const [sortOrder, setSortOrder] = useState<SORT_ORDER>( SORT_ORDER.ASC);
 
     const [sortTableData, sortedTableData] = useSortTableBy<T>(props.data);
 
@@ -40,7 +36,7 @@ export const TableComponent = <T,>(props: TableModel<T>): React.JSX.Element => {
                 }
             }
         }
-    }, [props, sort, sortOrder, sortTableData]);
+    }, [props, sort, sortOrder, sortTableData, loadedDataAtStart]);
 
     return <TableContainer>
         <TableStyled>
