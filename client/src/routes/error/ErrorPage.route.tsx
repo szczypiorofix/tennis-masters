@@ -1,9 +1,10 @@
+import React from 'react';
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
-export const ErrorPage = () => {
+export const ErrorPage = (): React.JSX.Element => {
     const error = useRouteError() as Error;
     if (!isRouteErrorResponse(error)) {
-        return null;
+        return <React.Fragment></React.Fragment>;
     }
     console.error(error);
     return (

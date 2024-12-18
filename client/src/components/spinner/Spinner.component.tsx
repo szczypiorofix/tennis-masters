@@ -1,5 +1,5 @@
-import { SpinnerContainer } from "./Spinner.styled"
+import { SpinnerDivStyled } from "./Spinner.styled"
 
 export const SpinnerComponent: React.FC = () => {
-    return <SpinnerContainer></SpinnerContainer>
+    return <SpinnerDivStyled  />
 }
