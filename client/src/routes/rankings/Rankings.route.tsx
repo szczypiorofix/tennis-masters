@@ -69,7 +69,7 @@ export const Rankings = (): React.JSX.Element => {
         {hasError && <p>ERROR: {errorMessage}</p>}
 
         <Container>
-            { response && <Table
+            { (response && !loading) && <Table
                 data={ response }
                 headers={ headers }
                 defaultSortColumn="firstname"

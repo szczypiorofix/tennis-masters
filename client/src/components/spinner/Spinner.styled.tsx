@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+const SpinnerDivContainerstyled = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+`;
+
 const SpinnerDivStyled = styled.div`
   border: 8px solid #f3f3f3;
   border-top: 8px solid #3498db;
@@ -18,4 +24,5 @@ const SpinnerDivStyled = styled.div`
   }
 `;
 
-export { SpinnerDivStyled };
+export { SpinnerDivContainerstyled, SpinnerDivStyled };
+
