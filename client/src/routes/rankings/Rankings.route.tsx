@@ -65,10 +65,10 @@ export const Rankings = (): React.JSX.Element => {
             { loading && <Spinner /> }
         </div>
 
-        {hasError && <p>ERROR: {errorMessage}</p>}
+        { (!Array.isArray(response) || hasError ) && <p>Błąd pobierania danych z serwera:  {errorMessage}</p>}
 
         <Container>
-            { (response && !loading) && <Table
+            { (Array.isArray(response) && !loading) && <Table
                 data={ response }
                 headers={ headers }
                 defaultSortColumn="firstname"

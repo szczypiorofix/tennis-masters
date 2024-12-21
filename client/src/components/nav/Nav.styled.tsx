@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavStyled = styled.nav`
@@ -18,7 +19,7 @@ const NavLiStyled= styled.li`
 
 `;
 
-const NavLiAStyled = styled.a<{ $active?: boolean; }>`
+const NavLiAStyled = styled(Link)<{ $active?: boolean; }>`
     text-decoration: none;
     display: flex;
     color: #f2f2f2;
@@ -34,4 +35,4 @@ const NavLiAStyled = styled.a<{ $active?: boolean; }>`
     }
 `;
 
-export { NavStyled, NavUlStyled, NavLiStyled, NavLiAStyled };
+export { NavLiAStyled, NavLiStyled, NavStyled, NavUlStyled };
