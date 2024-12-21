@@ -65,7 +65,7 @@ const TableThStyled = styled.th`
     font-weight: bold;
 `;
 
-const SortingButton = styled(IconButtonStyled)<{ $active?: boolean; }>`
+const SortingButtonStyled = styled(IconButtonStyled)<{ $active?: boolean; }>`
     color: black;
     transition: all 0.1s ease-in-out;
     border-style: solid;
@@ -82,5 +82,10 @@ const SortingButton = styled(IconButtonStyled)<{ $active?: boolean; }>`
     }
 `;
 
-export { SortingButton, TableBodyStyled, TableContainer, TableHeadStyled, TableStyled, TableTdStyled, TableThStyled, TableTrStyled };
+const SortIconStyled = styled.span<{ $active?: boolean; }>`
+    color: ${props => props.$active ? "black" : "transparent" };
+    margin-left: 6px;
+`;
+
+export { SortIconStyled, SortingButtonStyled, TableBodyStyled, TableContainer, TableHeadStyled, TableStyled, TableTdStyled, TableThStyled, TableTrStyled };
 
