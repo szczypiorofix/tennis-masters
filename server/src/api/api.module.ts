@@ -21,9 +21,9 @@ import { UsersModule } from './users/users.module';
             useFactory: (databaseConfigService: DatabaseConfigService) => databaseConfigService.getDatabaseConfig()
         }),
         UsersModule,
-        // ServeStaticModule.forRoot({
-        //     rootPath: join(__dirname, 'public'),
-        // }),
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'public'),
+        }),
     ],
     controllers: [ApiController],
     providers: [ApiService],
