@@ -12,6 +12,10 @@ const config = {
     include: ['*']
 };
 
+console.log(config.user);
+console.log(config.password);
+console.log(config.host);
+
 ftpDeploy
     .deploy(config)
     .then((res) => console.log("finished:", res))

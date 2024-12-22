@@ -69,7 +69,7 @@ workflows:
           filters:
             branches:
               only:
-                - development
+                - master
       - build_deploy_dev:
           requires:
             - build_client_dev
