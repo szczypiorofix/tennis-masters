@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { TableHeader } from '@/components/table/Table.model';
 import { SpinnerComponent as Spinner } from '../..//components/spinner/Spinner.component';
 import { ContainerComponent as Container } from '../../components/container/Container.component';
-import { SORT_ORDER } from '../../components/enums';
 import { TableComponent as Table } from '../../components/table/Table.component';
 import { EnvironmentScheme, getEnvironmentDetails } from '../../config/environment.config';
 import { useAPIRequest } from '../../hooks/useAPIRequest';
@@ -66,14 +65,14 @@ export const Rankings = (): React.JSX.Element => {
             { loading && <Spinner /> }
         </div>
 
-        {hasError && <p>ERROR: {errorMessage}</p>}
+        { (!Array.isArray(response) || hasError ) && <p>Błąd pobierania danych z serwera:  {errorMessage}</p>}
 
         <Container>
-            { response && <Table
+            { (Array.isArray(response) && !loading) && <Table
                 data={ response }
                 headers={ headers }
                 defaultSortColumn="firstname"
-                defaultSortOrder={SORT_ORDER.ASC}
+                defaultSortOrderAsc={true}
             ></Table> }
         </Container>
     </div>;

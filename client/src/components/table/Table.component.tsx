@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { useSortTableBy } from '../../hooks/useSortTableBy';
-import { SORT_ORDER } from '../enums';
+import { SortingButtonComponent as SortingButton} from './SortingButton.component';
 import { sortSignAsc, sortSignDesc, TableHeader, TableModel } from './Table.model';
 import {
-    SortingButton,
     TableBodyStyled,
     TableContainer,
     TableHeadStyled,
@@ -17,26 +16,26 @@ import {
 export const TableComponent = <T,>(props: TableModel<T>): React.JSX.Element => {
     const [loadedDataAtStart, SetLoadedDataAtStart] = useState<boolean>(false);
     const [sort, setSort] = useState<string | number | symbol>("id");
-    const [sortOrder, setSortOrder] = useState<SORT_ORDER>( SORT_ORDER.ASC);
+    const [sortOrderAsc, setSortOrderAsc] = useState<boolean>(true);
 
     const [sortTableData, sortedTableData] = useSortTableBy<T>(props.data);
 
     useEffect(() => {
         if (props.data.length > 0 && !loadedDataAtStart) {
-            if (props.defaultSortOrder && sortOrder !== props.defaultSortOrder) {
-                setSortOrder(props.defaultSortOrder);
+            if (props.defaultSortOrderAsc && sortOrderAsc !== props.defaultSortOrderAsc) {
+                setSortOrderAsc(props.defaultSortOrderAsc);
             }
             if (props.defaultSortColumn && sort !== props.defaultSortColumn) {
                 const foundColumn: TableHeader<T> | undefined = props.headers.find(item => item.name === props.defaultSortColumn);
                 if (foundColumn) {
                     setSort(props.defaultSortColumn);
                     console.log('set sort data');
-                    sortTableData(props.data, foundColumn, sortOrder === SORT_ORDER.ASC);
+                    sortTableData(props.data, foundColumn, sortOrderAsc);
                     SetLoadedDataAtStart(true);
                 }
             }
         }
-    }, [props, sort, sortOrder, sortTableData, loadedDataAtStart]);
+    }, [props, sort, sortOrderAsc, sortTableData, loadedDataAtStart]);
 
     return <TableContainer>
         <TableStyled>
@@ -46,20 +45,20 @@ export const TableComponent = <T,>(props: TableModel<T>): React.JSX.Element => {
                     (headerItem, headerIndex) => {
                         if (!headerItem.hidden) {
                             return <TableThStyled key={ "th" + headerIndex }>
-                                { headerItem.sortable && <div>
-                                    <div>
-                                        <SortingButton
-                                            $active={ sort === headerItem.name && sortOrder === SORT_ORDER.ASC }
-                                            onClick={() => {
-                                                setSortOrder(sortOrder === SORT_ORDER.ASC ? SORT_ORDER.DESC : SORT_ORDER.ASC);
-                                                setSort(headerItem.name);
-                                                sortTableData(props.data, headerItem, sortOrder === SORT_ORDER.ASC);
-                                            }}
-                                        >
-                                            <span>{ headerItem.display } { sortOrder === SORT_ORDER.ASC ? sortSignAsc : sortSignDesc }</span>
-                                        </SortingButton>
-                                    </div>
-                                </div> }
+                                { headerItem.sortable &&
+                                    <SortingButton
+                                        active={ sort === headerItem.name }
+                                        text={ headerItem.display }
+                                        sortIcon={ (sortOrderAsc ? sortSignAsc : sortSignDesc) }
+                                        onClick={() => {
+                                            setSort(headerItem.name);
+                                            if (sort === headerItem.name) {
+                                                setSortOrderAsc(!sortOrderAsc);
+                                            }
+                                            sortTableData(props.data, headerItem, sortOrderAsc);
+                                        }}
+                                    />
+                                }
                             </TableThStyled>
                         }
                         return null;
