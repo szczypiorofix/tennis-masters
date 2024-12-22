@@ -30,7 +30,6 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - run: cp server/package.json server/dist/
       - run: node deploy_server.js
       - run: node deploy_client.js
       - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
