@@ -4,12 +4,24 @@ orbs:
   node: circleci/node@5.2
 
 jobs:
-   build_deploy:
+   build_deploy_dev:
     executor: node/default
     steps:
       - checkout
-      - run: echo "Running build for deploy purpose"
+      - run: echo "Running build for deploy purpose (development)"
       - run: npm install
+      - run: node deploy_server.js
+      - run: node deploy_client.js
+      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+   build_deploy_prod:
+    executor: node/default
+    steps:
+      - checkout
+      - run: echo "Running build for deploy purpose (production)"
+      - run: npm install
+      - run: node deploy_server_prod.js
+      - run: node deploy_client_prod.js
+      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
    build_server:
     executor: node/default
     steps:
@@ -18,25 +30,22 @@ jobs:
       - run: npm install --prefix ./server
       - run: npm run test --prefix ./server
       - run: npm run build --prefix ./server
-   build_client:
+   build_client_dev:
     executor: node/default
     steps:
       - checkout
-      - run: echo "Running build for client application"
+      - run: echo "Running build for client application (development)"
       - run: npm install --prefix ./client
       - run: npm run test --prefix ./client
       - run: npm run build:dev:linux --prefix ./client
-   deploy_development:
+   build_client_prod:
     executor: node/default
     steps:
       - checkout
-      - run: node deploy_server.js
-      - run: node deploy_client.js
-      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
-   deploy_production:
-    executor: node/default
-    steps:
-      - checkout
+      - run: echo "Running build for client application (production)"
+      - run: npm install --prefix ./client
+      - run: npm run test --prefix ./client
+      - run: npm run build:prod:linux --prefix ./client
 
 workflows:
   tm-workflow:
@@ -47,30 +56,30 @@ workflows:
               only:
               - development
               - master
-      - build_client:
+      - build_client_dev:
           requires:
             - build_server
           filters:
             branches:
               only:
                 - development
-                - master
-      - build_deploy:
+      - build_client_prod:
+          requires:
+            - build_server
+          filters:
+            branches:
+              only:
+                - development
+      - build_deploy_dev:
           requires:
             - build_client
           filters:
             branches:
               only:
                 - development
-                - naster
-      - deploy_development:
+      - build_deploy_prod:
           requires:
-            - build_deploy
-          filters:
-            branches:
-              only:
-                - development
-      - deploy_production:
+            - build_client
           filters:
             branches:
               only:
