@@ -9,78 +9,43 @@ jobs:
     steps:
       - checkout
       - run: echo "Running build for deploy purpose (development)"
+      - run: npm install --prefix ./server
+      - run: npm run test --prefix ./server
+      - run: npm run build --prefix ./server
+      - run: npm install --prefix ./client
+      - run: npm run test --prefix ./client
+      - run: npm run build:dev:linux --prefix ./client
       - run: npm install
       - run: node deploy_server.js
       - run: node deploy_client.js
       - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+   
    build_deploy_prod:
     executor: node/default
     steps:
       - checkout
       - run: echo "Running build for deploy purpose (production)"
+      - run: npm install --prefix ./server
+      - run: npm run test --prefix ./server
+      - run: npm run build --prefix ./server
+      - run: npm install --prefix ./client
+      - run: npm run test --prefix ./client
+      - run: npm run build:prod:linux --prefix ./client
       - run: npm install
       - run: node deploy_server_prod.js
       - run: node deploy_client_prod.js
       - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
-   build_server:
-    executor: node/default
-    steps:
-      - checkout
-      - run: echo "Running build for server application"
-      - run: npm install --prefix ./server
-      - run: npm run test --prefix ./server
-      - run: npm run build --prefix ./server
-   build_client_dev:
-    executor: node/default
-    steps:
-      - checkout
-      - run: echo "Running build for client application (development)"
-      - run: npm install --prefix ./client
-      - run: npm run test --prefix ./client
-      - run: npm run build:dev:linux --prefix ./client
-   build_client_prod:
-    executor: node/default
-    steps:
-      - checkout
-      - run: echo "Running build for client application (production)"
-      - run: npm install --prefix ./client
-      - run: npm run test --prefix ./client
-      - run: npm run build:prod:linux --prefix ./client
 
 workflows:
   tm-workflow:
     jobs:
-      - build_server:
+      - build_deploy_dev:
           filters:
             branches:
               only:
               - development
-              - master
-      - build_client_dev:
-          requires:
-            - build_server
-          filters:
-            branches:
-              only:
-                - development
-      - build_client_prod:
-          requires:
-            - build_server
-          filters:
-            branches:
-              only:
-                - master
-      - build_deploy_dev:
-          requires:
-            - build_client_dev
-          filters:
-            branches:
-              only:
-                - development
       - build_deploy_prod:
-          requires:
-            - build_client_prod
           filters:
             branches:
               only:
-                - master
+              - master
