@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavStyled = styled.nav`
@@ -19,7 +19,7 @@ const NavLiStyled= styled.li`
 
 `;
 
-const NavLiAStyled = styled(Link)<{ $active?: boolean; }>`
+const NavLiAStyled = styled(NavLink)`
     text-decoration: none;
     display: flex;
     color: #f2f2f2;
@@ -27,8 +27,10 @@ const NavLiAStyled = styled(Link)<{ $active?: boolean; }>`
     align-items: center;
     padding: 14px 16px;
     font-size: 17px;
-    ${props => props.$active && 'background-color: #04AA6D; color: white;'};
     transition: all 0.15s ease-in-out;
+    &.active {
+        background-color: #04AA6D;
+    }
     &:hover {
         background-color: #ddd;
         color: black;

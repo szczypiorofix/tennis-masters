@@ -6,7 +6,7 @@ export const NavComponent = (props: NavComponentsProps): React.JSX.Element => {
         <NavUlStyled>
             { props.navList.list.map((navElement) => 
             <NavLiStyled key={'navList'+navElement.id}>
-                <NavLiAStyled $active={navElement.id === props.navList.activeId} to={ navElement.urlPath }>{ navElement.title }</NavLiAStyled>
+                <NavLiAStyled to={ navElement.urlPath }>{ navElement.title }</NavLiAStyled>
             </NavLiStyled>
             ) }
         </NavUlStyled>
