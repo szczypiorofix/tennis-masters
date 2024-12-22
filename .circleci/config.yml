@@ -72,14 +72,14 @@ workflows:
                 - development
       - build_deploy_dev:
           requires:
-            - build_client
+            - build_client_dev
           filters:
             branches:
               only:
                 - development
       - build_deploy_prod:
           requires:
-            - build_client
+            - build_client_prod
           filters:
             branches:
               only:
