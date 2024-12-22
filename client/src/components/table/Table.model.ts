@@ -1,5 +1,3 @@
-import { SORT_ORDER } from "../enums";
-
 export const sortSignAsc: string = "\u2191";
 
 export const sortSignDesc: string = "\u2193";

@@ -26,6 +26,18 @@ jobs:
       - run: npm install --prefix ./client
       - run: npm run test --prefix ./client
       - run: npm run build:dev:linux --prefix ./client
+   deploy_development:
+    executor: node/default
+    steps:
+      - checkout
+      - run: cp server/package.json server/dist/
+      - run: node deploy_server.js
+      - run: node deploy_client.js
+      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+   deploy_production:
+    executor: node/default
+    steps:
+      - checkout
 
 workflows:
   tm-workflow:
@@ -35,6 +47,7 @@ workflows:
             branches:
               only:
               - development
+              - master
       - build_client:
           requires:
             - build_server
@@ -42,6 +55,7 @@ workflows:
             branches:
               only:
                 - development
+                - master
       - build_deploy:
           requires:
             - build_client
@@ -49,3 +63,16 @@ workflows:
             branches:
               only:
                 - development
+                - naster
+      - deploy_development:
+          requires:
+            - build_deploy
+          filters:
+            branches:
+              only:
+                - development
+      - deploy_production:
+          filters:
+            branches:
+              only:
+                - master
