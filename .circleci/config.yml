@@ -43,6 +43,7 @@ jobs:
   deploy_server_dev:
     executor: node/default
     steps:
+      - checkout
       - restore_cache:
           key: dependency-cache-deploy-{{ checksum "./package.json" }}
       - restore_cache:
@@ -53,6 +54,7 @@ jobs:
   deploy_client_dev:
     executor: node/default
     steps:
+      - checkout
       - restore_cache:
           key: dependency-cache-deploy-{{ checksum "./package.json" }}
       - restore_cache:
@@ -62,6 +64,7 @@ jobs:
   domain_restart_dev:
     executor: node/default
     steps:
+      - checkout
       - add_ssh_keys:
           fingerprints:
             - "SHA256:UncXNIQ93P+26JrN0yQwF0epZdo7kVAdNvPD+ZAn56Q"
