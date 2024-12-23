@@ -8,6 +8,9 @@ jobs:
     executor: node/default
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:sksJXjTtHi7QbIxkJkrV6tCPOdKwtm+3CJYEMGpXr8M"
       - run: echo "Running build for deploy purpose (development)"
       - run: npm install --prefix ./server
       - run: npm run test --prefix ./server
@@ -19,6 +22,7 @@ jobs:
       - run: node deploy_server.js
       - run: node deploy_client.js
       - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && npm install && devil www restart tm-dev.wroblewskipiotr.pl"
    
    build_deploy_prod:
     executor: node/default
