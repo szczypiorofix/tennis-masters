@@ -13,7 +13,6 @@ jobs:
         paths:
           - ./server/node_modules
           - ./server/dist
-
   build_client_dev:
     - run: npm install --prefix ./client
     - run: npm run test --prefix ./client
@@ -23,20 +22,16 @@ jobs:
         paths:
           - ./client/node_modules
           - ./client/build
-
   build_deploy_dev:
     - run: npm install
-
   deploy_server_dev:
     - restore_cache:
         key: dependency-cache-server-{{ checksum "server/package.json" }}
     - run: node deploy_server.js
-
   deploy_client_dev:
     - restore_cache:
         key: dependency-cache-client-{{ checksum "client/package.json" }}
     - run: node deploy_client.js
-
   domain_restart_dev:
     - add_ssh_keys:
         fingerprints:
@@ -53,7 +48,6 @@ workflows:
             branches:
               only:
               - development
-
       - build_client_dev:
           requires:
             - build_server_dev:
@@ -62,7 +56,6 @@ workflows:
             branches:
               only:
               - development
-
       - build_deploy_dev:
           requires:
             - build_server_dev:
@@ -73,7 +66,6 @@ workflows:
             branches:
               only:
               - development
-
       - deploy_server_dev:
           requires:
             - build_deploy_dev:
@@ -84,7 +76,6 @@ workflows:
             branches:
               only:
               - development
-
       - deploy_client_dev:
           requires:
             - build_deploy_dev:
@@ -95,7 +86,6 @@ workflows:
             branches:
               only:
               - development
-
       - domain_restart_dev:
           requires:
             - deploy_server_dev:
