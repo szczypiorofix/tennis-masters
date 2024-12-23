@@ -82,18 +82,12 @@ workflows:
               - development
 
       - build_client_dev:
-          requires:
-            - build_server_dev:
-              - success
           filters:
             branches:
               only:
               - development
 
       - build_deploy_dev:
-          requires:
-            - build_client_dev:
-              - success
           filters:
             branches:
               only:
