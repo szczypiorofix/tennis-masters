@@ -22,7 +22,8 @@ jobs:
       - run: node deploy_server.js
       - run: node deploy_client.js
       - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
-      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && npm install && devil www restart tm-dev.wroblewskipiotr.pl"
+      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && npm install"
+      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && devil www restart tm-dev.wroblewskipiotr.pl"
    
    build_deploy_prod:
     executor: node/default
