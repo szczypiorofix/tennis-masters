@@ -9,8 +9,8 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-        fingerprints:
-          - "SHA256:sksJXjTtHi7QbIxkJkrV6tCPOdKwtm+3CJYEMGpXr8M"
+          fingerprints:
+            - "SHA256:sksJXjTtHi7QbIxkJkrV6tCPOdKwtm+3CJYEMGpXr8M"
       - run: echo "Running build for deploy purpose (development)"
       - run: npm install --prefix ./server
       - run: npm run test --prefix ./server
