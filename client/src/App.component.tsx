@@ -11,7 +11,9 @@ export const App = (props: { children: React.ReactNode }): React.JSX.Element => 
     return <AppContext.Provider value={ state } >
         <Container $fullWidth >
             <Header />
-            { props.children }
+            <Container>
+                { props.children }
+            </Container>
             <Footer />
         </Container>
     </AppContext.Provider>;
