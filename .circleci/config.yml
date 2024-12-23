@@ -4,53 +4,105 @@ orbs:
   node: circleci/node@5.2
 
 jobs:
-   build_deploy_dev:
-    executor: node/default
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:UncXNIQ93P+26JrN0yQwF0epZdo7kVAdNvPD+ZAn56Q"
-      - run: echo "Running build for deploy purpose (development)"
-      - run: npm install --prefix ./server
-      - run: npm run test --prefix ./server
-      - run: npm run build --prefix ./server
-      - run: npm install --prefix ./client
-      - run: npm run test --prefix ./client
-      - run: npm run build:dev:linux --prefix ./client
-      - run: npm install
-      - run: node deploy_server.js
-      - run: node deploy_client.js
-      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
-      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && npm install"
-      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && devil www restart tm-dev.wroblewskipiotr.pl"
-   
-   build_deploy_prod:
-    executor: node/default
-    steps:
-      - checkout
-      - run: echo "Running build for deploy purpose (production)"
-      - run: npm install --prefix ./server
-      - run: npm run test --prefix ./server
-      - run: npm run build --prefix ./server
-      - run: npm install --prefix ./client
-      - run: npm run test --prefix ./client
-      - run: npm run build:prod:linux --prefix ./client
-      - run: npm install
-      - run: node deploy_server_prod.js
-      - run: node deploy_client_prod.js
-      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+  build_server_dev:
+    - run: npm install --prefix ./server
+    - run: npm run test --prefix ./server
+    - run: npm run build --prefix ./server
+    - save_cache:
+        key: dependency-cache-server-{{ checksum "./server/package.json" }}
+        paths:
+          - ./server/node_modules
+          - ./server/dist
+
+  build_client_dev:
+    - run: npm install --prefix ./client
+    - run: npm run test --prefix ./client
+    - run: npm run build:dev:linux --prefix ./client
+    - save_cache:
+        key: dependency-cache-client-{{ checksum "./client/package.json" }}
+        paths:
+          - ./client/node_modules
+          - ./client/build
+
+  build_deploy_dev:
+    - run: npm install
+
+  deploy_server_dev:
+    - restore_cache:
+        key: dependency-cache-server-{{ checksum "./server/package.json" }}
+    - run: node deploy_server.js
+
+  deploy_client_dev:
+    - restore_cache:
+        key: dependency-cache-client-{{ checksum "./client/package.json" }}
+    - run: node deploy_client.js
+
+  domain_restart_dev:
+    - add_ssh_keys:
+        fingerprints:
+          - "SHA256:UncXNIQ93P+26JrN0yQwF0epZdo7kVAdNvPD+ZAn56Q"
+    - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+    - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && npm install"
+    - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && devil www restart tm-dev.wroblewskipiotr.pl"
 
 workflows:
   tm-workflow:
     jobs:
-      - build_deploy_dev:
+      - build_server_dev:
           filters:
             branches:
               only:
               - development
-      - build_deploy_prod:
+
+      - build_client_dev:
+          requires:
+            - build_server_dev:
+              - success
           filters:
             branches:
               only:
-              - master
+              - development
+
+      - build_deploy_dev:
+          requires:
+            - build_server_dev:
+              - success
+            - build_client_dev:
+              - success
+          filters:
+            branches:
+              only:
+              - development
+
+      - deploy_server_dev:
+          requires:
+            - build_deploy_dev:
+              - success
+            - build_server_dev:
+              - success
+          filters:
+            branches:
+              only:
+              - development
+
+      - deploy_client_dev:
+          requires:
+            - build_deploy_dev:
+              - success
+            - build_client_dev:
+              - success
+          filters:
+            branches:
+              only:
+              - development
+
+      - domain_restart_dev:
+          requires:
+            - deploy_server_dev:
+              - success
+            - deploy_client_dev:
+              - success
+          filters:
+            branches:
+              only:
+              - development
