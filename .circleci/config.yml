@@ -20,6 +20,7 @@ jobs:
   build_client_dev:
     executor: node/default
     steps:
+      - checkout
       - run: npm install --prefix ./client
       - run: npm run test --prefix ./client
       - run: npm run build:dev:linux --prefix ./client
@@ -32,11 +33,18 @@ jobs:
   build_deploy_dev:
     executor: node/default
     steps:
+      - checkout
       - run: npm install
+      - save_cache:
+          key: dependency-cache-deploy-{{ checksum "./package.json" }}
+          paths:
+           - ./node_modules
   
   deploy_server_dev:
     executor: node/default
     steps:
+      - restore_cache:
+          key: dependency-cache-deploy-{{ checksum "./package.json" }}
       - restore_cache:
           key: dependency-cache-server-{{ checksum "server/package.json" }}
       - run: cp server/package.json server/dist/
@@ -45,6 +53,8 @@ jobs:
   deploy_client_dev:
     executor: node/default
     steps:
+      - restore_cache:
+          key: dependency-cache-deploy-{{ checksum "./package.json" }}
       - restore_cache:
           key: dependency-cache-client-{{ checksum "client/package.json" }}
       - run: node deploy_client.js
