@@ -1,0 +1,247 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.2
+
+jobs:
+  build_server_dev:
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install --prefix ./server
+      - run: npm run test --prefix ./server
+      - run: npm run build --prefix ./server
+      - save_cache:
+          key: dependency-cache-server-dev-{{ checksum "./server/package.json" }}
+          paths:
+            - ./server/node_modules
+            - ./server/dist
+  
+  build_client_dev:
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install --prefix ./client
+      - run: npm run test --prefix ./client
+      - run: npm run build:dev:linux --prefix ./client
+      - save_cache:
+          key: dependency-cache-client-dev-{{ checksum "./client/package.json" }}
+          paths:
+            - ./client/node_modules
+            - ./client/build
+  
+  build_deploy_dev:
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install
+      - save_cache:
+          key: dependency-cache-deploy-dev-{{ checksum "./package.json" }}
+          paths:
+           - ./node_modules
+  
+  deploy_server_dev:
+    executor: node/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-deploy-dev-{{ checksum "./package.json" }}
+      - restore_cache:
+          key: dependency-cache-server-dev-{{ checksum "server/package.json" }}
+      - run: cp server/package.json server/dist/
+      - run: node deploy_server.js
+  
+  deploy_client_dev:
+    executor: node/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-deploy-dev-{{ checksum "./package.json" }}
+      - restore_cache:
+          key: dependency-cache-client-dev-{{ checksum "client/package.json" }}
+      - run: node deploy_client.js
+  
+  domain_restart_dev:
+    executor: node/default
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:UncXNIQ93P+26JrN0yQwF0epZdo7kVAdNvPD+ZAn56Q"
+      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && npm install"
+      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-dev.wroblewskipiotr.pl/public_nodejs/ && devil www restart tm-dev.wroblewskipiotr.pl"
+
+  build_client_prod:
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install --prefix ./client
+      - run: npm run test --prefix ./client
+      - run: npm run build:dev:linux --prefix ./client
+      - save_cache:
+          key: dependency-cache-client-prod-{{ checksum "./client/package.json" }}
+          paths:
+            - ./client/node_modules
+            - ./client/build
+
+  build_server_prod:
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install --prefix ./server
+      - run: npm run test --prefix ./server
+      - run: npm run build --prefix ./server
+      - save_cache:
+          key: dependency-cache-server-prod-{{ checksum "./server/package.json" }}
+          paths:
+            - ./server/node_modules
+            - ./server/dist
+  
+  build_deploy_prod:
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install
+      - save_cache:
+          key: dependency-cache-deploy-prod-{{ checksum "./package.json" }}
+          paths:
+           - ./node_modules
+
+
+  deploy_server_prod:
+    executor: node/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-deploy-prod-{{ checksum "./package.json" }}
+      - restore_cache:
+          key: dependency-cache-server-prod-{{ checksum "server/package.json" }}
+      - run: cp server/package.json server/dist/
+      - run: node deploy_server_prod.js
+  
+  deploy_client_prod:
+    executor: node/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-deploy-prod-{{ checksum "./package.json" }}
+      - restore_cache:
+          key: dependency-cache-client-prod-{{ checksum "client/package.json" }}
+      - run: node deploy_client_prod.js
+
+  domain_restart_prod:
+    executor: node/default
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:UncXNIQ93P+26JrN0yQwF0epZdo7kVAdNvPD+ZAn56Q"
+      - run: ssh-keyscan -H 's21.mydevil.net' >> ~/.ssh/known_hosts
+      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-prod.wroblewskipiotr.pl/public_nodejs/ && npm install"
+      - run: ssh $SSH_USER@$SSH_HOST "cd domains/tm-prod.wroblewskipiotr.pl/public_nodejs/ && devil www restart tm-prod.wroblewskipiotr.pl"
+
+workflows:
+  tm-workflow:
+    jobs:
+      - build_server_dev:
+          filters:
+            branches:
+              only:
+              - development
+
+      - build_client_dev:
+          filters:
+            branches:
+              only:
+              - development
+
+      - build_deploy_dev:
+          filters:
+            branches:
+              only:
+              - development
+
+      - deploy_server_dev:
+          requires:
+            - build_deploy_dev:
+              - success
+            - build_server_dev:
+              - success
+          filters:
+            branches:
+              only:
+              - development
+
+      - deploy_client_dev:
+          requires:
+            - build_deploy_dev:
+              - success
+            - build_client_dev:
+              - success
+          filters:
+            branches:
+              only:
+              - development
+
+      - domain_restart_dev:
+          requires:
+            - deploy_server_dev:
+              - success
+            - deploy_client_dev:
+              - success
+          filters:
+            branches:
+              only:
+              - development
+
+      - build_server_prod:
+          filters:
+            branches:
+              only:
+              - master
+
+      - build_client_prod:
+          filters:
+            branches:
+              only:
+              - master
+
+      - build_deploy_prod:
+          filters:
+            branches:
+              only:
+              - master
+
+      - deploy_server_prod:
+          requires:
+            - build_deploy_prod:
+              - success
+            - build_server_prod:
+              - success
+          filters:
+            branches:
+              only:
+              - master
+
+      - deploy_client_prod:
+          requires:
+            - build_deploy_prod:
+              - success
+            - build_client_prod:
+              - success
+          filters:
+            branches:
+              only:
+              - master
+
+      - domain_restart_prod:
+          requires:
+            - deploy_server_prod:
+              - success
+            - deploy_client_prod:
+              - success
+          filters:
+            branches:
+              only:
+              - master

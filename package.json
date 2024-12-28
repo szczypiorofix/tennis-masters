@@ -1,0 +1,13 @@
+{
+  "name": "tennis-masters",
+  "version": "1.0.0",
+  "description": "Tennis Masters",
+  "private": true,
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ftp-deploy": "^2.4.7"
+  }
+}

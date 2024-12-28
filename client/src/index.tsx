@@ -4,10 +4,12 @@ import { RouterProvider } from "react-router-dom";
 
 import { MainRouter } from "./router";
 
+import './global.css';
+
 ReactDOM.render(
     <React.StrictMode>
         <RouterProvider
-            router={MainRouter}
+            router={ MainRouter }
             future={{ v7_startTransition: true }}
         />
     </React.StrictMode>,

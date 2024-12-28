@@ -17,8 +17,7 @@ module.exports = {
     },
     ignorePatterns: ['.eslintrc.js'],
     rules: {
-        'semi': 'always',
-        '@typescript-eslint/semi': 'always',
+        'semi': 'error',
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
