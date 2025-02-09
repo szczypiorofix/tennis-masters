@@ -1,4 +1,4 @@
-import { TableHeader } from "../../components/table/Table.model";
+import { TableHeader } from "../../components/models";
 
 export function sortTableDataByColumn<T>(data: readonly T[], header: TableHeader<T>, ascend: boolean): T[] {
     return [...data].sort((a, b) => {

@@ -14,7 +14,11 @@ export interface TableHeader<T> {
 export interface TableModel<T> {
     headers: ReadonlyArray<TableHeader<T>>;
     data: ReadonlyArray<T>;
-    resultsPerPage?: number;
+    resultsPerPage: number;
+    page: number;
+    maxResults: number;
+    caption?: string;
     defaultSortColumn?: keyof T;
     defaultSortOrderAsc?: true;
+    setPage: (page: number, resultsPerPage: number, order: keyof T, asc: boolean) => void;
 }

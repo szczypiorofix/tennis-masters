@@ -23,7 +23,7 @@ const HeaderNavList: NavList = {
         },
     ],
     activeId: 0
-}
+};
 
 function resolveActiveNavElement(): number {
     const url = new URL(window.location.href);

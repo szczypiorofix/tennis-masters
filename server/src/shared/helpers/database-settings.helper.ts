@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 import { Environment } from "src/shared/models";
 
-export function databaeSettingsForEnv(environment?: Environment): TypeOrmModuleOptions {
+export function databaseSettingsForEnv(environment?: Environment): TypeOrmModuleOptions {
     const settings: TypeOrmModuleOptions = {
         type: 'mysql',
         host: process.env.DNHOST,
@@ -12,6 +12,6 @@ export function databaeSettingsForEnv(environment?: Environment): TypeOrmModuleO
         database: process.env.DBNAME,
         synchronize: true, // only for dev environments
     };
-    
+
     return settings;
 }

@@ -1,4 +1,4 @@
-import { TableHeader } from '@/components/table/Table.model';
+import { TableHeader } from '@/components/models/Table.model';
 import { useCallback, useState } from 'react';
 import { sortTableDataByColumn } from '../shared/helpers';
 

@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { CreateUserDto } from './createuser.dto';
+import { GetUserDto } from './get.user.dto';
 import { UpdateUserDto } from './updateuser.dto';
 import { UsersService } from './users.service';
 
@@ -8,8 +9,8 @@ export class UsersController {
     constructor(private userService: UsersService) { }
 
     @Get()
-    getUsers() {
-        return this.userService.getUser();
+    getUsers(@Query() query: GetUserDto) {
+        return this.userService.getUser(query);
     }
 
     @Post()

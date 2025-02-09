@@ -8,7 +8,7 @@ import { ROUTER_PATH } from "./shared/enums";
 
 const AppComponentWrapper = (children: React.JSX.Element): React.JSX.Element => {
     return <App>{ children }</App>;
-}
+};
 
 export const MainRouter = createBrowserRouter(
     [

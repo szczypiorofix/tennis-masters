@@ -1,5 +1,5 @@
-var FtpDeploy = require('ftp-deploy');
-var ftpDeploy = new FtpDeploy();
+const FtpDeploy = require('ftp-deploy');
+const ftpDeploy = new FtpDeploy();
 
 const config = {
     user: process.env.FTPUSERPROD,

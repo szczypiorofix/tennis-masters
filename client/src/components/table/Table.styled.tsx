@@ -4,26 +4,25 @@ import { IconButtonStyled } from '../button/Button.styled';
 
 const TableContainer = styled.div`
     background-color: #ffffff;
-    max-height: 300px;
+    min-height: 500px;
     overflow: auto;
     display: block;
     margin: 12px auto;
-    padding: 12px;
+    /* padding: 12px; */
     max-width: 60%;
     border: 1px solid rgb(226, 232, 240);
     border-radius: 10px;
     margin-bottom: 1rem;
-    padding: 2rem;
+    /* padding: 2rem; */
 `;
 
 const TableStyled = styled.table`
-    min-width: 50rem;
     border-spacing: 0;
-    border-collapse: separate;
+    border-collapse: collapse;
     width: 100%;
     border-color: inherit;
-    text-indent: 0;
     margin: 0 auto;
+    text-indent: 0;
     &::after, &::before {
         border: 0 solid #e5e7eb;
     }
@@ -31,13 +30,17 @@ const TableStyled = styled.table`
 
 const TableHeadStyled = styled.thead`
     position: sticky;
+    top: 0;
     border: 0 solid #e5e7eb;
+    background-color: #ffffff;
     & > tr > th {
         text-align: start;
         border-color: rgb(229, 231, 235);
         border-style: solid;
         border-width: 0 0 1px 0;
-        padding: 14px;
+        cursor: pointer;
+        user-select: none;
+
     }
 `;
 
@@ -49,6 +52,24 @@ const TableBodyStyled = styled.tbody`
         border-color: rgb(229, 231, 235);
         border-style: solid;
         border-width: 0 0 1px 0;
+        padding: 14px;
+    }
+    & > tr:last-of-type > td {
+        border-bottom-width: 0;
+    }
+`;
+
+const TableFooterStyled = styled.tfoot`
+    border: 0 solid #e5e7eb;
+    box-sizing: border-box;
+    /* position: sticky;
+    bottom: 0px; */
+    background-color: #ffffff;
+    & > tr > th {
+        text-align: start;
+        border-color: rgb(229, 231, 235);
+        border-style: solid;
+        border-width: 1px 0 0 0;
         padding: 14px;
     }
 `;
@@ -63,6 +84,15 @@ const TableTdStyled = styled.td`
 
 const TableThStyled = styled.th`
     font-weight: bold;
+`;
+
+const  TableCaptionStyled = styled.caption`
+    border-color: inherit;
+    margin: 0 auto;
+    text-indent: 0;
+    caption-side: bottom;;
+    text-align: left;
+    padding: 16px 14px;
 `;
 
 const SortingButtonStyled = styled(IconButtonStyled)<{ $active?: boolean; }>`
@@ -87,5 +117,4 @@ const SortIconStyled = styled.span<{ $active?: boolean; }>`
     margin-left: 6px;
 `;
 
-export { SortIconStyled, SortingButtonStyled, TableBodyStyled, TableContainer, TableHeadStyled, TableStyled, TableTdStyled, TableThStyled, TableTrStyled };
-
+export { SortIconStyled, SortingButtonStyled, TableBodyStyled, TableCaptionStyled, TableContainer, TableFooterStyled, TableHeadStyled, TableStyled, TableTdStyled, TableThStyled, TableTrStyled };

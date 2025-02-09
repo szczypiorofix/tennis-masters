@@ -5,8 +5,8 @@ const ButtonStyled = styled.button`
 `;
 
 const IconButtonStyled = styled(ButtonStyled)`
-        width: 28px;
-        height: 28px;
+    width: 28px;
+    height: 28px;
 `;
 
 export { ButtonStyled, IconButtonStyled };

@@ -1,3 +1,4 @@
 export * from './NavComponent.model';
 export * from './ButtonComponent.model';
 export * from './SortingButtonComponent.model';
+export * from './Table.model';
